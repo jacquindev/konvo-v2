@@ -5,7 +5,11 @@
       {
         "name": "next"
       }
-    ]
+    ],
+    "paths": {
+      "@/*": ["./src/*"],
+      "@repo/backend/*": ["../../packages/backend/convex/*"]
+    }
   },
   "include": [
     "**/*.ts",

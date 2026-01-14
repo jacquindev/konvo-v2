@@ -1,5 +1,5 @@
 {
-  "name": "docs",
+  "name": "widget",
   "version": "0.1.0",
   "type": "module",
   "private": true,
@@ -11,18 +11,27 @@
     "check-types": "next typegen && tsc --noEmit"
   },
   "dependencies": {
+    "@hookform/resolvers": "^5.2.2",
+    "@repo/backend": "workspace:*",
     "@repo/ui": "workspace:*",
-    "next": "16.1.0",
-    "react": "^19.2.0",
-    "react-dom": "^19.2.0"
+    "@vapi-ai/web": "^2.5.2",
+    "convex": "^1.31.4",
+    "jotai": "^2.16.2",
+    "jotai-family": "^1.0.1",
+    "lucide-react": "^0.562.0",
+    "next": "16.1.1",
+    "react": "19.2.3",
+    "react-dom": "19.2.3",
+    "react-hook-form": "^7.71.0",
+    "zod": "^4.3.5"
   },
   "devDependencies": {
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/node": "^22.15.3",
-    "@types/react": "19.2.2",
-    "@types/react-dom": "19.2.2",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
     "eslint": "^9.39.1",
-    "typescript": "5.9.2"
+    "typescript": "^5"
   }
 }
