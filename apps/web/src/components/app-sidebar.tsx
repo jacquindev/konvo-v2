@@ -33,7 +33,7 @@ import {
 } from "@repo/ui/components/ui/sidebar";
 
 /* prettier-ignore */
-const routes = [
+export const routes = [
   {
     group: null,
     items: [{ label: "Dashboard", href: "/dashboard", icon: HomeIcon }],

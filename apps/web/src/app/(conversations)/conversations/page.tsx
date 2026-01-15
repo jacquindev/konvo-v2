@@ -1,9 +1,7 @@
-import React from "react";
+import { ConversationsView } from "@/components/conversations/conversations-view";
 
-type Props = {};
-
-const Page = (props: Props) => {
-  return <div>Page</div>;
+const Page = () => {
+  return <ConversationsView />;
 };
 
 export default Page;

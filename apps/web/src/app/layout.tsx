@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { DM_Mono, Inter } from "next/font/google";
 
 import { ThemeProvider } from "@repo/ui/components/theme/provider";
+import { Toaster } from "@repo/ui/components/ui/sonner";
 import { ClerkClientProvider } from "@/providers/clerk-client-provider";
 import { ConvexClientProvider } from "@/providers/convex-client-provider";
 
@@ -40,7 +41,10 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ClerkClientProvider>
-            <ConvexClientProvider>{children}</ConvexClientProvider>
+            <ConvexClientProvider>
+              {children}
+              <Toaster position="top-center" />
+            </ConvexClientProvider>
           </ClerkClientProvider>
         </ThemeProvider>
       </body>

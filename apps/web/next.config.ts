@@ -6,6 +6,9 @@ import "@/lib/env-client";
 
 const nextConfig: NextConfig = {
   devIndicators: false,
+  images: {
+    remotePatterns: [{ protocol: "https", hostname: "flagcdn.com" }],
+  },
 };
 
 export default withSentryConfig(nextConfig, {

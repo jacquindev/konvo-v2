@@ -19,7 +19,11 @@
     "typescript": "^5"
   },
   "dependencies": {
+    "@ai-sdk/openai": "^2.0.89",
     "@clerk/backend": "^2.29.2",
-    "convex": "^1.31.4"
+    "@convex-dev/agent": "^0.3.2",
+    "ai": "^5.0.29",
+    "convex": "^1.31.4",
+    "zod": "^4.3.5"
   }
 }

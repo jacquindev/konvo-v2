@@ -1,10 +1,15 @@
 "use client";
 
-import { useQuery } from "convex/react";
+import { useAction, useQuery } from "convex/react";
+import { toUIMessages, useThreadMessages } from "@convex-dev/agent/react";
 import { ArrowLeftIcon, MenuIcon } from "lucide-react";
 import { useAtomValue, useSetAtom } from "jotai";
+import { Controller, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 import { api } from "@repo/backend/_generated/api";
+import { useInfiniteScroll } from "@repo/ui/hooks/use-infinite-scroll";
 
 import {
   contactSessionIdAtomFamily,
@@ -15,8 +20,36 @@ import {
 
 import { Button } from "@repo/ui/components/ui/button";
 import { Label } from "@repo/ui/components/ui/label";
+import {
+  Conversation,
+  ConversationContent,
+  ConversationScrollButton,
+} from "@repo/ui/components/ai-elements/conversation";
+import {
+  PromptInput,
+  PromptInputBody,
+  PromptInputFooter,
+  PromptInputSubmit,
+  PromptInputTextarea,
+  PromptInputTools,
+} from "@repo/ui/components/ai-elements/prompt-input";
+import {
+  Message,
+  MessageContent,
+  MessageResponse,
+} from "@repo/ui/components/ai-elements/message";
+import {
+  Suggestion,
+  Suggestions,
+} from "@repo/ui/components/ai-elements/suggestion";
+import { InfiniteScrollTrigger } from "@repo/ui/components/shared/infinite-scroll-trigger";
+import { GeneratedAvatar } from "@repo/ui/components/shared/generated-avatar";
 
 import { WidgetHeader } from "../widget-header";
+
+const formSchema = z.object({
+  message: z.string().min(1, "Please input a message."),
+});
 
 export function WidgetChatScreen() {
   const organizationId = useAtomValue(organizationIdAtom);
@@ -28,6 +61,11 @@ export function WidgetChatScreen() {
   const setScreen = useSetAtom(screenAtom);
   const setConversationId = useSetAtom(conversationIdAtom);
 
+  const handleBack = () => {
+    setConversationId(null);
+    setScreen("selection");
+  };
+
   const conversation = useQuery(
     api.public.conversations.getOne,
     conversationId && contactSessionId
@@ -35,9 +73,38 @@ export function WidgetChatScreen() {
       : "skip"
   );
 
-  const handleBack = () => {
-    setConversationId(null);
-    setScreen("selection");
+  const messages = useThreadMessages(
+    api.public.messages.getMany,
+    conversation?.threadId && contactSessionId
+      ? { threadId: conversation.threadId, contactSessionId }
+      : "skip",
+    { initialNumItems: 10 }
+  );
+
+  const { topElementRef, canLoadMore, handleLoadMore, isLoadingMore } =
+    useInfiniteScroll({
+      status: messages.status,
+      loadMore: messages.loadMore,
+      loadSize: 10,
+    });
+
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: { message: "" },
+  });
+
+  const createMessage = useAction(api.public.messages.create);
+
+  const onSubmit = async (values: z.infer<typeof formSchema>) => {
+    if (!conversation || !contactSessionId) return;
+
+    form.reset();
+
+    await createMessage({
+      threadId: conversation.threadId,
+      prompt: values.message,
+      contactSessionId,
+    });
   };
 
   return (
@@ -53,9 +120,68 @@ export function WidgetChatScreen() {
           <MenuIcon />
         </Button>
       </WidgetHeader>
-      <div className="flex flex-1 flex-col gap-4 p-4">
-        <pre>{JSON.stringify(conversation, null, 2)}</pre>
-      </div>
+      <Conversation>
+        <InfiniteScrollTrigger
+          canLoadMore={canLoadMore}
+          isLoadingMore={isLoadingMore}
+          onLoadMore={handleLoadMore}
+          ref={topElementRef}
+        />
+        <ConversationContent>
+          {toUIMessages(messages.results ?? [])?.map((message) => {
+            return (
+              <Message
+                key={message.id}
+                from={message.role === "user" ? "user" : "assistant"}
+                className="flex flex-row gap-2 items-start group-[.is-assistant]:flex-row-reverse"
+              >
+                {message.role === "assistant" && (
+                  <GeneratedAvatar seed="assistant" badgeImageUrl="/logo.png" />
+                )}
+                <MessageContent>
+                  <MessageResponse>{message.text}</MessageResponse>
+                </MessageContent>
+              </Message>
+            );
+          })}
+        </ConversationContent>
+        <ConversationScrollButton />
+      </Conversation>
+      {/* TODO: Add Suggestions */}
+      <PromptInput
+        onSubmit={() => form.handleSubmit(onSubmit)()}
+        className="rounded-none border-x-0 border-b-0 p-4"
+      >
+        <Controller
+          control={form.control}
+          name="message"
+          disabled={conversation?.status === "resolved"}
+          render={({ field, fieldState }) => (
+            <PromptInputBody>
+              <PromptInputTextarea
+                {...field}
+                aria-invalid={fieldState.invalid}
+                disabled={conversation?.status === "resolved"}
+                placeholder={
+                  conversation?.status === "resolved"
+                    ? "This conversation has been resolved."
+                    : "Type your message..."
+                }
+              />
+            </PromptInputBody>
+          )}
+        />
+        <PromptInputFooter>
+          <PromptInputTools />
+          <PromptInputSubmit
+            disabled={
+              conversation?.status === "resolved" || !form.formState.isValid
+            }
+            status="ready"
+            type="submit"
+          />
+        </PromptInputFooter>
+      </PromptInput>
     </>
   );
 }
