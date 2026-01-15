@@ -22,8 +22,11 @@
     "@ai-sdk/openai": "^2.0.89",
     "@clerk/backend": "^2.29.2",
     "@convex-dev/agent": "^0.3.2",
+    "@convex-dev/rag": "^0.6.1",
+    "@mendable/firecrawl-js": "^4.11.0",
     "ai": "^5.0.29",
     "convex": "^1.31.4",
+    "convex-helpers": "^0.1.111",
     "zod": "^4.3.5"
   }
 }

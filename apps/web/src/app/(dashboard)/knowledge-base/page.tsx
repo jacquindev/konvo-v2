@@ -1,12 +1,7 @@
-import { PageContainer } from "@/components/page-container";
-import { PageHeader } from "@/components/page-header";
+import { KnowledgeBaseView } from "@/components/knowledge-base/knowledge-base-view";
 
 const Page = () => {
-  return (
-    <PageContainer header={<PageHeader title="Knowledge Base" />}>
-      Knowledge base page
-    </PageContainer>
-  );
+  return <KnowledgeBaseView />;
 };
 
 export default Page;

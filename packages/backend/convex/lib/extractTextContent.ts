@@ -1,0 +1,140 @@
+import { generateText } from "ai";
+import { openai } from "@ai-sdk/openai";
+import type { StorageActionWriter } from "convex/server";
+import { assert } from "convex-helpers";
+
+import { Id } from "../_generated/dataModel";
+
+const AI_CONFIG = {
+  image: {
+    model: openai.chat("gpt-4o-mini"),
+    prompt:
+      "You turn images into text. If it is a photo of a document, transcribe it. If it is not a document, describe it.",
+  },
+  pdf: {
+    model: openai.chat("gpt-4o"),
+    prompt: "You transform PDF files into text.",
+  },
+  html: {
+    model: openai.chat("gpt-4o"),
+    prompt: "You transform content into markdown.",
+  },
+} as const;
+
+const SUPPORTED_IMAGE_TYPES = [
+  "image/jpeg",
+  "image/png",
+  "image/webp",
+  "image/gif",
+] as const;
+
+async function extractImageText(url: string): Promise<string> {
+  const result = await generateText({
+    model: AI_CONFIG.image.model,
+    system: AI_CONFIG.image.prompt,
+    messages: [
+      {
+        role: "user",
+        content: [{ type: "image", image: new URL(url) }],
+      },
+    ],
+  });
+
+  return result.text;
+}
+
+async function extractPdfText(
+  url: string,
+  mimeType: string,
+  filename: string
+): Promise<string> {
+  const result = await generateText({
+    model: AI_CONFIG.pdf.model,
+    system: AI_CONFIG.pdf.prompt,
+    messages: [
+      {
+        role: "user",
+        content: [
+          {
+            type: "file",
+            data: new URL(url),
+            mediaType: mimeType,
+            filename,
+          },
+          {
+            type: "text",
+            text: "Extract the text from the PDF and print it without explaining you will do so.",
+          },
+        ],
+      },
+    ],
+  });
+
+  return result.text;
+}
+
+async function extractTextFileContent(
+  ctx: { storage: StorageActionWriter },
+  storageId: Id<"_storage">,
+  bytes: ArrayBuffer | undefined,
+  mimeType: string
+): Promise<string> {
+  const arrayBuffer =
+    bytes || (await (await ctx.storage.get(storageId))?.arrayBuffer());
+  assert(arrayBuffer, "Failed to get file content.");
+
+  const text = new TextDecoder().decode(arrayBuffer);
+
+  if (mimeType.toLowerCase() !== "text/plain") {
+    const result = await generateText({
+      model: AI_CONFIG.html.model,
+      system: AI_CONFIG.html.prompt,
+      messages: [
+        {
+          role: "user",
+          content: [
+            { type: "text", text },
+            {
+              type: "text",
+              text: "Extract the text and print it in a markdown format without explaining that you will do so.",
+            },
+          ],
+        },
+      ],
+    });
+    return result.text;
+  }
+
+  return text;
+}
+
+export type ExtractTextContentArgs = {
+  storageId: Id<"_storage">;
+  filename: string;
+  bytes?: ArrayBuffer;
+  mimeType: string;
+};
+
+export async function extractTextContent(
+  ctx: { storage: StorageActionWriter },
+  args: ExtractTextContentArgs
+): Promise<string> {
+  const { storageId, filename, bytes, mimeType } = args;
+
+  const url = await ctx.storage.getUrl(storageId);
+  assert(url, "Failed to get storage URL.");
+
+  if (SUPPORTED_IMAGE_TYPES.some((type) => type === mimeType)) {
+    return extractImageText(url);
+  }
+
+  if (mimeType.toLowerCase().includes("pdf")) {
+    return extractPdfText(url, mimeType, filename);
+  }
+
+  if (mimeType.toLowerCase().includes("text")) {
+    return extractTextFileContent(ctx, storageId, bytes, mimeType);
+  }
+
+  throw new Error(`Unsupported MIME type: ${mimeType}`);
+}
