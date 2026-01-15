@@ -5,6 +5,7 @@ import { saveMessage } from "@convex-dev/agent";
 
 import { components } from "../_generated/api";
 import { action, mutation, query } from "../_generated/server";
+import { OPERATOR_MESSAGE_ENHANCEMENT_PROMPT } from "../lib/constants";
 import { supportAgent } from "../shared/ai/agents/supportAgent";
 import { openai } from "@ai-sdk/openai";
 
@@ -151,8 +152,7 @@ export const enhanceResponse = action({
       messages: [
         {
           role: "system",
-          content:
-            "Enhance the operator's message to be more professional, clear, and helpful while maintaining their intent and key information.",
+          content: OPERATOR_MESSAGE_ENHANCEMENT_PROMPT,
         },
         {
           role: "user",

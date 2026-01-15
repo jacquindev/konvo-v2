@@ -269,3 +269,50 @@
     cursor: pointer;
   }
 }
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+/* Scrollbar Track */
+::-webkit-scrollbar-track {
+  background: var(--muted);
+  border-radius: 9999px;
+  margin: 2px;
+}
+
+/* Scrollbar Thumb */
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    to bottom right,
+    var(--color-secondary),
+    var(--color-secondary-foreground)
+  );
+  border-radius: 9999px;
+  border: 2px solid var(--muted);
+  transition: all 0.3s ease;
+}
+
+/* Scrollbar Thumb Hover */
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    to bottom right,
+    var(--color-primary),
+    var(--color-accent)
+  );
+  border: 2px solid var(--muted-foreground);
+  box-shadow: 0 0 6px var(--color-secondary);
+}
+
+/* Scrollbar Corner (for resizable areas) */
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+/* Firefox support */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-secondary) var(--color-muted);
+}

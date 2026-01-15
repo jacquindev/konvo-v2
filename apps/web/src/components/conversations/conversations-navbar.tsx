@@ -8,6 +8,12 @@ import { Button } from "@repo/ui/components/ui/button";
 import { Separator } from "@repo/ui/components/ui/separator";
 import { SidebarTrigger } from "@repo/ui/components/ui/sidebar";
 import { MoreHorizontalIcon } from "lucide-react";
+import {
+  Breadcrumb,
+  BreadcrumbItem,
+  BreadcrumbLink,
+  BreadcrumbList,
+} from "@repo/ui/components/ui/breadcrumb";
 
 interface ConversationsNavbarProps {
   additional?: ReactNode;
@@ -30,6 +36,15 @@ export function ConversationsNavbar({ additional }: ConversationsNavbarProps) {
           orientation="vertical"
           className="data-[orientation=vertical]:h-4 mx-2"
         />
+        <Breadcrumb>
+          <BreadcrumbList>
+            <BreadcrumbItem>
+              <BreadcrumbLink href="/conversations">
+                Conversations
+              </BreadcrumbLink>
+            </BreadcrumbItem>
+          </BreadcrumbList>
+        </Breadcrumb>
       </div>
       <div className="flex items-center gap-3">
         {additional}

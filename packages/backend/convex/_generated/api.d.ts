@@ -13,6 +13,7 @@ import type * as lib_constants from "../lib/constants.js";
 import type * as lib_convertEntryToPublicFile from "../lib/convertEntryToPublicFile.js";
 import type * as lib_extractTextContent from "../lib/extractTextContent.js";
 import type * as lib_firecrawl from "../lib/firecrawl.js";
+import type * as playground from "../playground.js";
 import type * as private_conversations from "../private/conversations.js";
 import type * as private_files from "../private/files.js";
 import type * as private_messages from "../private/messages.js";
@@ -24,6 +25,7 @@ import type * as shared_ai_agents_supportAgent from "../shared/ai/agents/support
 import type * as shared_ai_rag from "../shared/ai/rag.js";
 import type * as shared_ai_tools_escalateConversation from "../shared/ai/tools/escalateConversation.js";
 import type * as shared_ai_tools_resolveConversation from "../shared/ai/tools/resolveConversation.js";
+import type * as shared_ai_tools_search from "../shared/ai/tools/search.js";
 import type * as shared_contactSessions from "../shared/contactSessions.js";
 import type * as shared_conversations from "../shared/conversations.js";
 
@@ -39,6 +41,7 @@ declare const fullApi: ApiFromModules<{
   "lib/convertEntryToPublicFile": typeof lib_convertEntryToPublicFile;
   "lib/extractTextContent": typeof lib_extractTextContent;
   "lib/firecrawl": typeof lib_firecrawl;
+  playground: typeof playground;
   "private/conversations": typeof private_conversations;
   "private/files": typeof private_files;
   "private/messages": typeof private_messages;
@@ -50,6 +53,7 @@ declare const fullApi: ApiFromModules<{
   "shared/ai/rag": typeof shared_ai_rag;
   "shared/ai/tools/escalateConversation": typeof shared_ai_tools_escalateConversation;
   "shared/ai/tools/resolveConversation": typeof shared_ai_tools_resolveConversation;
+  "shared/ai/tools/search": typeof shared_ai_tools_search;
   "shared/contactSessions": typeof shared_contactSessions;
   "shared/conversations": typeof shared_conversations;
 }>;

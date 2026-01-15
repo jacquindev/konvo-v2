@@ -9,6 +9,7 @@
   "scripts": {
     "dev": "convex dev",
     "setup": "convex dev --until-success",
+    "playground": "convex run --component agent apiKeys:issue",
     "check-types": "tsc --noEmit -p convex"
   },
   "devDependencies": {

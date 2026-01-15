@@ -4,8 +4,9 @@ import { ConvexError, v } from "convex/values";
 import { internal } from "../_generated/api";
 import { action, query } from "../_generated/server";
 import { supportAgent } from "../shared/ai/agents/supportAgent";
-import { resolveConversation } from "../shared/ai/tools/resolveConversation";
 import { escalateConversation } from "../shared/ai/tools/escalateConversation";
+import { resolveConversation } from "../shared/ai/tools/resolveConversation";
+import { search } from "../shared/ai/tools/search";
 
 export const create = action({
   args: {
@@ -60,8 +61,9 @@ export const create = action({
         {
           prompt: args.prompt,
           tools: {
-            resolveConversation,
-            escalateConversation,
+            resolveConversationTool: resolveConversation,
+            escalateConversationTool: escalateConversation,
+            searchTool: search,
           },
         }
       );
