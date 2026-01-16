@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useAction, useMutation } from "convex/react";
+import { useAction, useMutation, useQuery } from "convex/react";
 import { useAtomValue, useSetAtom } from "jotai";
 
 import { api } from "@repo/backend/_generated/api";
@@ -12,6 +12,7 @@ import {
   loadingMessageAtom,
   organizationIdAtom,
   screenAtom,
+  widgetSettingsAtom,
 } from "@/lib/atoms";
 import type { InitStep } from "@/lib/types";
 
@@ -46,6 +47,7 @@ export function WidgetLoadingScreen({
   const setErrorMessage = useSetAtom(errorMessageAtom);
   const setScreen = useSetAtom(screenAtom);
   const setOrganizationId = useSetAtom(organizationIdAtom);
+  const setWidgetSettings = useSetAtom(widgetSettingsAtom);
 
   // Step 1: Validate Organization
   const validateOrganization = useAction(api.public.organizations.validate);
@@ -105,13 +107,35 @@ export function WidgetLoadingScreen({
     validateContactSession({ contactSessionId })
       .then((result) => {
         setSessionValid(result.valid);
-        setStep("done");
+        setStep("settings");
       })
       .catch(() => {
         setSessionValid(false);
-        setStep("done");
+        setStep("settings");
       });
   }, [contactSessionId, setLoadingMessage, step, validateContactSession]);
+
+  // Step 3: Load widget settings
+  const widgetSettings = useQuery(
+    api.public.widgetSettings.getByOrganizationId,
+    organizationId ? { organizationId } : "skip"
+  );
+  useEffect(() => {
+    if (step !== "settings") return;
+
+    setLoadingMessage("Loading widget settings...");
+
+    if (widgetSettings !== undefined && organizationId) {
+      setWidgetSettings(widgetSettings);
+      setStep("done");
+    }
+  }, [
+    organizationId,
+    setLoadingMessage,
+    setWidgetSettings,
+    step,
+    widgetSettings,
+  ]);
 
   useEffect(() => {
     if (step !== "done") return;

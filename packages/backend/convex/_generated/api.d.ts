@@ -26,6 +26,7 @@ import type * as public_contactSessions from "../public/contactSessions.js";
 import type * as public_conversations from "../public/conversations.js";
 import type * as public_messages from "../public/messages.js";
 import type * as public_organizations from "../public/organizations.js";
+import type * as public_widgetSettings from "../public/widgetSettings.js";
 import type * as shared_ai_agents_supportAgent from "../shared/ai/agents/supportAgent.js";
 import type * as shared_ai_rag from "../shared/ai/rag.js";
 import type * as shared_ai_tools_escalateConversation from "../shared/ai/tools/escalateConversation.js";
@@ -61,6 +62,7 @@ declare const fullApi: ApiFromModules<{
   "public/conversations": typeof public_conversations;
   "public/messages": typeof public_messages;
   "public/organizations": typeof public_organizations;
+  "public/widgetSettings": typeof public_widgetSettings;
   "shared/ai/agents/supportAgent": typeof shared_ai_agents_supportAgent;
   "shared/ai/rag": typeof shared_ai_rag;
   "shared/ai/tools/escalateConversation": typeof shared_ai_tools_escalateConversation;

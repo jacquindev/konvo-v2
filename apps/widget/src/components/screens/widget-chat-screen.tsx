@@ -16,6 +16,7 @@ import {
   conversationIdAtom,
   organizationIdAtom,
   screenAtom,
+  widgetSettingsAtom,
 } from "@/lib/atoms";
 
 import { Button } from "@repo/ui/components/ui/button";
@@ -46,6 +47,7 @@ import { InfiniteScrollTrigger } from "@repo/ui/components/shared/infinite-scrol
 import { GeneratedAvatar } from "@repo/ui/components/shared/generated-avatar";
 
 import { WidgetHeader } from "../widget-header";
+import { useMemo } from "react";
 
 const formSchema = z.object({
   message: z.string().min(1, "Please input a message."),
@@ -57,9 +59,20 @@ export function WidgetChatScreen() {
   const contactSessionId = useAtomValue(
     contactSessionIdAtomFamily(organizationId || "")
   );
+  const widgetSettings = useAtomValue(widgetSettingsAtom);
 
   const setScreen = useSetAtom(screenAtom);
   const setConversationId = useSetAtom(conversationIdAtom);
+
+  const suggestions = useMemo(() => {
+    if (!widgetSettings) return [];
+
+    return Object.keys(widgetSettings.defaultSuggestions).map((key) => {
+      return widgetSettings.defaultSuggestions[
+        key as keyof typeof widgetSettings.defaultSuggestions
+      ];
+    });
+  }, [widgetSettings]);
 
   const handleBack = () => {
     setConversationId(null);
@@ -147,7 +160,30 @@ export function WidgetChatScreen() {
         </ConversationContent>
         <ConversationScrollButton />
       </Conversation>
-      {/* TODO: Add Suggestions */}
+
+      {toUIMessages(messages.results ?? [])?.length === 1 && (
+        <Suggestions className="flex flew-row flex-wrap w-full py-2 px-4">
+          {suggestions.map((suggestion) => {
+            if (!suggestion) return null;
+
+            return (
+              <Suggestion
+                key={suggestion}
+                suggestion={suggestion}
+                onClick={() => {
+                  form.setValue("message", suggestion, {
+                    shouldDirty: true,
+                    shouldTouch: true,
+                    shouldValidate: true,
+                  });
+                  form.handleSubmit(onSubmit)();
+                }}
+              />
+            );
+          })}
+        </Suggestions>
+      )}
+
       <PromptInput
         onSubmit={() => form.handleSubmit(onSubmit)()}
         className="rounded-none border-x-0 border-b-0 p-4"

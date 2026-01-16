@@ -42,6 +42,7 @@ import {
 } from "@repo/ui/components/ui/select";
 import { Spinner } from "@repo/ui/components/ui/spinner";
 import { BotIcon, PhoneIcon } from "lucide-react";
+import { Badge } from "@repo/ui/components/ui/badge";
 
 interface CustomizationFormProps {
   initialData?: WidgetSettings | null;
@@ -76,7 +77,7 @@ export function CustomizationForm({
     resolver: zodResolver(formSchema),
     defaultValues: {
       greetMessage:
-        initialData?.greetMessage || "Hi there! How can I help you today?",
+        initialData?.greetMessage || "Hello, how can I help you today?",
       defaultSuggestions: {
         suggestion1: initialData?.defaultSuggestions?.suggestion1 || "",
         suggestion2: initialData?.defaultSuggestions?.suggestion2 || "",
@@ -226,7 +227,13 @@ export function CustomizationForm({
       </Card>
 
       {hasVapiPlugin && (
-        <Card>
+        <Card className="relative">
+          <Badge
+            className="absolute -top-3 right-6 border-primary text-primary text-sm"
+            variant="secondary"
+          >
+            Vapi
+          </Badge>
           <CardHeader className="text-center">
             <CardTitle className="text-lg">Voice Assistant Settings</CardTitle>
             <CardDescription>
