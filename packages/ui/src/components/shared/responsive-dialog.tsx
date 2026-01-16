@@ -29,7 +29,7 @@ interface ResponsiveDialogProps {
   icon?: LucideIcon | string;
   iconClassName?: string;
   title?: string;
-  description?: string;
+  description?: string | React.ReactNode;
   children: React.ReactNode;
   footer?: React.ReactNode;
   open: boolean;
@@ -70,7 +70,7 @@ export const ResponsiveDialog = ({
               typeof Icon === "string" ? (
                 <div
                   className={cn(
-                    "relative mb-4 size-8 overflow-hidden rounded-[4px] bg-transparent",
+                    "relative mb-4 size-8 overflow-hidden rounded-md bg-transparent",
                     iconClassName
                   )}
                 >
@@ -88,7 +88,7 @@ export const ResponsiveDialog = ({
               )
             ) : null}
             <DrawerTitle className="text-xl font-bold">{title}</DrawerTitle>
-            <DrawerDescription className="text-center text-base text-balance">
+            <DrawerDescription className="text-center text-base text-balance [&_a]:font-medium [&_a]:text-primary [&_a]:hover:underline [&_a]:hover:underline-offset-4">
               {description}
             </DrawerDescription>
           </DrawerHeader>
@@ -121,7 +121,7 @@ export const ResponsiveDialog = ({
             typeof Icon === "string" ? (
               <div
                 className={cn(
-                  "relative mb-4 size-8 overflow-hidden rounded-sm bg-transparent",
+                  "relative mb-4 size-8 overflow-hidden rounded-md bg-transparent",
                   iconClassName
                 )}
               >
@@ -137,7 +137,7 @@ export const ResponsiveDialog = ({
             )
           ) : null}
           <DialogTitle className="text-xl font-bold">{title}</DialogTitle>
-          <DialogDescription className="text-center text-base text-balance">
+          <DialogDescription className="text-center text-base text-balance [&_a]:font-medium [&_a]:text-primary [&_a]:hover:underline [&_a]:hover:underline-offset-4">
             {description}
           </DialogDescription>
         </DialogHeader>

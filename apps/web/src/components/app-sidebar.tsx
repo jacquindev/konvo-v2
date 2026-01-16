@@ -8,13 +8,16 @@ import {
   DollarSignIcon,
   HomeIcon,
   InboxIcon,
+  KeyRoundIcon,
   LibraryBigIcon,
   PaletteIcon,
   ZapIcon,
 } from "lucide-react";
 import { OrganizationSwitcher } from "@clerk/nextjs";
 
+import { isRouteActive } from "@/lib/utils";
 import { cn } from "@repo/ui/lib/utils";
+
 import { Logo } from "@repo/ui/components/shared/logo";
 import {
   Sidebar,
@@ -42,6 +45,7 @@ export const routes = [
     group: "Main",
     items: [
       { label: "Conversations", href: "/conversations", icon: InboxIcon },
+      { label: "Credentials", href: "/credentials", icon: KeyRoundIcon },
       { label: "Knowledge Base", href: "/knowledge-base", icon: LibraryBigIcon },
       { label: "Plugins", href: "/plugins", icon: BlocksIcon },
     ],
@@ -57,7 +61,7 @@ export const routes = [
   {
     group: "Account",
     items: [
-      { label: "Plans & Billing", href: "/billing", icon: DollarSignIcon }
+      { label: "Plans & Billing", href: "/billing", icon: DollarSignIcon },
     ]
   }
 ];
@@ -94,7 +98,7 @@ export function AppSidebar() {
             <SidebarGroupContent>
               <SidebarMenu>
                 {route.items.map((item) => {
-                  const isActive = pathname.startsWith(item.href);
+                  const isActive = isRouteActive({ pathname, href: item.href });
 
                   return (
                     <SidebarMenuButton

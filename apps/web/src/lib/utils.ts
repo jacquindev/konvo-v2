@@ -1,4 +1,5 @@
 import * as ct from "countries-and-timezones";
+import { toast } from "sonner";
 
 export function getCountryFromTimezone(timezone?: string) {
   if (!timezone) return null;
@@ -18,4 +19,36 @@ export function getCountryFromTimezone(timezone?: string) {
 
 export function getCountryFlagUrl(countryCode: string) {
   return `https://flagcdn.com/w40/${countryCode.toLowerCase()}.png`;
+}
+
+export function isRouteActive({
+  pathname,
+  href,
+  match = "exact",
+  slug,
+}: {
+  pathname: string;
+  href: string;
+  match?: "exact" | "dynamic";
+  slug?: string;
+}) {
+  if (match === "exact") {
+    return pathname === href;
+  }
+
+  if (match === "dynamic") {
+    const base = href.replace(`/[${slug}]`, "");
+    return pathname.startsWith(`${base}/`) && pathname.split("/").length >= 3;
+  }
+
+  return false;
+}
+
+export async function copyToClipboard(text: string) {
+  try {
+    await navigator.clipboard.writeText(text);
+    toast.success("Copied to clipboard!");
+  } catch {
+    toast.error("Failed to copy to clipboard. Please try again");
+  }
 }

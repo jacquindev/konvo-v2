@@ -9,7 +9,11 @@ import { CornerUpLeftIcon } from "lucide-react";
 import { useAtomValue } from "jotai";
 
 import { statusFilterAtom } from "@/lib/atoms";
-import { getCountryFlagUrl, getCountryFromTimezone } from "@/lib/utils";
+import {
+  getCountryFlagUrl,
+  getCountryFromTimezone,
+  isRouteActive,
+} from "@/lib/utils";
 
 import { api } from "@repo/backend/_generated/api";
 import { cn } from "@repo/ui/lib/utils";
@@ -88,7 +92,10 @@ export function ConversationsSidebar() {
               <SidebarGroupContent>
                 <SidebarMenu>
                   {route.items.map((item) => {
-                    const isActive = pathname.startsWith(item.href);
+                    const isActive = isRouteActive({
+                      pathname,
+                      href: item.href,
+                    });
 
                     return (
                       <SidebarMenuItem key={item.label}>

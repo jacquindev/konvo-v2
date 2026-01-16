@@ -1,12 +1,7 @@
-import { PageContainer } from "@/components/page-container";
-import { PageHeader } from "@/components/page-header";
+import { DashboardView } from "@/components/dashboard/dashboard-view";
 
 const Page = () => {
-  return (
-    <PageContainer header={<PageHeader title="Dashboard" />}>
-      Dashboard page
-    </PageContainer>
-  );
+  return <DashboardView />;
 };
 
 export default Page;

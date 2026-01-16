@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as lib_awsSecretManager from "../lib/awsSecretManager.js";
 import type * as lib_clerkClient from "../lib/clerkClient.js";
 import type * as lib_constants from "../lib/constants.js";
 import type * as lib_convertEntryToPublicFile from "../lib/convertEntryToPublicFile.js";
@@ -17,6 +18,10 @@ import type * as playground from "../playground.js";
 import type * as private_conversations from "../private/conversations.js";
 import type * as private_files from "../private/files.js";
 import type * as private_messages from "../private/messages.js";
+import type * as private_plugins from "../private/plugins.js";
+import type * as private_secrets from "../private/secrets.js";
+import type * as private_vapi from "../private/vapi.js";
+import type * as private_widgetSettings from "../private/widgetSettings.js";
 import type * as public_contactSessions from "../public/contactSessions.js";
 import type * as public_conversations from "../public/conversations.js";
 import type * as public_messages from "../public/messages.js";
@@ -28,6 +33,8 @@ import type * as shared_ai_tools_resolveConversation from "../shared/ai/tools/re
 import type * as shared_ai_tools_search from "../shared/ai/tools/search.js";
 import type * as shared_contactSessions from "../shared/contactSessions.js";
 import type * as shared_conversations from "../shared/conversations.js";
+import type * as shared_plugins from "../shared/plugins.js";
+import type * as shared_secrets from "../shared/secrets.js";
 
 import type {
   ApiFromModules,
@@ -36,6 +43,7 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  "lib/awsSecretManager": typeof lib_awsSecretManager;
   "lib/clerkClient": typeof lib_clerkClient;
   "lib/constants": typeof lib_constants;
   "lib/convertEntryToPublicFile": typeof lib_convertEntryToPublicFile;
@@ -45,6 +53,10 @@ declare const fullApi: ApiFromModules<{
   "private/conversations": typeof private_conversations;
   "private/files": typeof private_files;
   "private/messages": typeof private_messages;
+  "private/plugins": typeof private_plugins;
+  "private/secrets": typeof private_secrets;
+  "private/vapi": typeof private_vapi;
+  "private/widgetSettings": typeof private_widgetSettings;
   "public/contactSessions": typeof public_contactSessions;
   "public/conversations": typeof public_conversations;
   "public/messages": typeof public_messages;
@@ -56,6 +68,8 @@ declare const fullApi: ApiFromModules<{
   "shared/ai/tools/search": typeof shared_ai_tools_search;
   "shared/contactSessions": typeof shared_contactSessions;
   "shared/conversations": typeof shared_conversations;
+  "shared/plugins": typeof shared_plugins;
+  "shared/secrets": typeof shared_secrets;
 }>;
 
 /**

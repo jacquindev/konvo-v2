@@ -1,12 +1,7 @@
-import { PageContainer } from "@/components/page-container";
-import { PageHeader } from "@/components/page-header";
+import { CustomizationView } from "@/components/customization/customization-view";
 
 const Page = () => {
-  return (
-    <PageContainer header={<PageHeader title="Widget Customization" />}>
-      plugins page
-    </PageContainer>
-  );
+  return <CustomizationView />;
 };
 
 export default Page;
