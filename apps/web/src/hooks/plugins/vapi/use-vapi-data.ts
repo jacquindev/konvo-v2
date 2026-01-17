@@ -1,6 +1,5 @@
 import { useState, useEffect } from "react";
 import { useAction } from "convex/react";
-import { ConvexError } from "convex/values";
 import { toast } from "sonner";
 
 import { api } from "@repo/backend/_generated/api";
@@ -30,11 +29,7 @@ export function useVapiPhoneNumbers(): {
         setData(result);
         setError(null);
       } catch (error) {
-        if (error instanceof ConvexError) {
-          if (cancelled) return;
-          setError(error);
-          toast.error((error.data as { message: string }).message);
-        } else if (error instanceof Error) {
+        if (error instanceof Error) {
           if (cancelled) return;
           setError(error);
           toast.error(error.message);
@@ -78,11 +73,7 @@ export function useVapiAssistants(): {
         setData(result);
         setError(null);
       } catch (error) {
-        if (error instanceof ConvexError) {
-          if (cancelled) return;
-          setError(error);
-          toast.error((error.data as { message: string }).message);
-        } else if (error instanceof Error) {
+        if (error instanceof Error) {
           if (cancelled) return;
           setError(error);
           toast.error(error.message);

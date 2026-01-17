@@ -52,7 +52,7 @@ export function AppNavbar() {
   });
 
   return (
-    <nav className="sticky top-0 flex h-16 shrink-0 items-center justify-between border-b px-4 shadow-xs group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 lg:px-6 bg-background/80 backdrop-blur-xl">
+    <nav className="z-0 sticky top-0 flex h-16 shrink-0 items-center justify-between border-b px-4 shadow-xs group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 lg:px-6 bg-background/80 backdrop-blur-xl">
       <div className="flex items-center gap-2">
         <Button
           type="button"
@@ -78,7 +78,7 @@ export function AppNavbar() {
                       "capitalize",
                       idx < crumbs.length - 1
                         ? "text-muted-foreground"
-                        : "text-foreground"
+                        : "text-foreground",
                     )}
                   >
                     {item.label.toLowerCase() === "customization"

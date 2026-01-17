@@ -3,7 +3,6 @@
 import Image from "next/image";
 import {
   ArrowLeftRightIcon,
-  CheckIcon,
   ChevronDownIcon,
   PlugIcon,
   UnplugIcon,
@@ -57,7 +56,7 @@ export function PluginCard({
       <CardHeader
         className={cn(
           "flex flex-col items-center justify-center w-full gap-4",
-          isConnected && "hidden"
+          isConnected && "hidden",
         )}
       >
         <div className="flex items-center gap-4">
@@ -68,7 +67,7 @@ export function PluginCard({
               fill
               className={cn(
                 "object-cover object-center",
-                serviceImageClassName
+                serviceImageClassName,
               )}
             />
           </div>
@@ -114,15 +113,15 @@ export function PluginCard({
       <CardFooter
         className={cn(
           "flex flex-col gap-4",
-          isConnected && "flex-row justify-between"
+          isConnected && "flex-row justify-between",
         )}
       >
         {isConnected && (
-          <div className="flex items-center gap-4">
+          <div className="flex items-start gap-4">
             <div
               className={cn(
-                "relative size-10 rounded-md overflow-hidden aspect-square",
-                serviceImageClassName
+                "relative size-10 rounded-md overflow-hidden aspect-square shrink-0",
+                serviceImageClassName,
               )}
             >
               <Image
@@ -132,11 +131,11 @@ export function PluginCard({
                 className="object-cover object-center"
               />
             </div>
-            <div className="flex flex-1 flex-col gap-y-1 text-muted-foreground">
+            <div className="flex flex-col gap-y-1 text-muted-foreground">
               <p className="text-foreground font-medium text-sm capitalize">
                 {serviceName} Connect
               </p>
-              <p className="text-sm line-clamp-2 truncate">
+              <p className="text-sm line-clamp-2 truncate text-balance">
                 You&apos;re already connected to Vapi.
               </p>
             </div>
@@ -150,7 +149,7 @@ export function PluginCard({
           onClick={onSubmit}
           className={cn(
             "w-full shadow-sm hover:-translate-y-0.5 hover:shadow-md motion-safe:transition-all motion-safe:duration-300",
-            isConnected && "w-auto"
+            isConnected && "w-auto",
           )}
         >
           {isConnected ? (
