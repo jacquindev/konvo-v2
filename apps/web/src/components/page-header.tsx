@@ -19,7 +19,7 @@ export function PageHeader({
   additional,
 }: PageHeaderProps) {
   return (
-    <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+    <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:flex-wrap md:items-center">
       <div className="flex grow shrink-0 items-start gap-3">
         {Icon &&
           (typeof Icon === "string" ? (
@@ -42,7 +42,7 @@ export function PageHeader({
         <div className="space-y-1">
           <h1 className="text-2xl font-semibold md:text-3xl">{title}</h1>
           {description && (
-            <div className="text-sm md:text-base text-pretty text-muted-foreground lg:text-lg transition [&_a]:font-medium [&_a]:text-primary [&_a]:hover:underline [&_a]:hover:underline-offset-4">
+            <div className="text-sm lg:text-base text-pretty text-muted-foreground xl:text-lg transition [&_a]:font-medium [&_a]:text-primary [&_a]:hover:underline [&_a]:hover:underline-offset-4">
               {description}
             </div>
           )}

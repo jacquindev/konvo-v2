@@ -9,7 +9,7 @@ import {
   UnplugIcon,
 } from "lucide-react";
 
-import type { PluginFeature } from "@/lib/types";
+import type { Feature } from "@/lib/types";
 import { cn } from "@repo/ui/lib/utils";
 
 import { Button } from "@repo/ui/components/ui/button";
@@ -37,7 +37,7 @@ interface PluginCardProps {
   serviceName: string;
   serviceImageClassName?: string;
   serviceImage: string;
-  features: PluginFeature[];
+  features: Feature[];
   onSubmit: () => void;
   disabled?: boolean;
   isConnected?: boolean;

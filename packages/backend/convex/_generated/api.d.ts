@@ -8,6 +8,7 @@
  * @module
  */
 
+import type * as http from "../http.js";
 import type * as lib_awsSecretManager from "../lib/awsSecretManager.js";
 import type * as lib_clerkClient from "../lib/clerkClient.js";
 import type * as lib_constants from "../lib/constants.js";
@@ -15,6 +16,7 @@ import type * as lib_convertEntryToPublicFile from "../lib/convertEntryToPublicF
 import type * as lib_extractTextContent from "../lib/extractTextContent.js";
 import type * as lib_firecrawl from "../lib/firecrawl.js";
 import type * as playground from "../playground.js";
+import type * as private_contactSessions from "../private/contactSessions.js";
 import type * as private_conversations from "../private/conversations.js";
 import type * as private_files from "../private/files.js";
 import type * as private_messages from "../private/messages.js";
@@ -37,6 +39,7 @@ import type * as shared_contactSessions from "../shared/contactSessions.js";
 import type * as shared_conversations from "../shared/conversations.js";
 import type * as shared_plugins from "../shared/plugins.js";
 import type * as shared_secrets from "../shared/secrets.js";
+import type * as shared_subscriptions from "../shared/subscriptions.js";
 
 import type {
   ApiFromModules,
@@ -45,6 +48,7 @@ import type {
 } from "convex/server";
 
 declare const fullApi: ApiFromModules<{
+  http: typeof http;
   "lib/awsSecretManager": typeof lib_awsSecretManager;
   "lib/clerkClient": typeof lib_clerkClient;
   "lib/constants": typeof lib_constants;
@@ -52,6 +56,7 @@ declare const fullApi: ApiFromModules<{
   "lib/extractTextContent": typeof lib_extractTextContent;
   "lib/firecrawl": typeof lib_firecrawl;
   playground: typeof playground;
+  "private/contactSessions": typeof private_contactSessions;
   "private/conversations": typeof private_conversations;
   "private/files": typeof private_files;
   "private/messages": typeof private_messages;
@@ -74,6 +79,7 @@ declare const fullApi: ApiFromModules<{
   "shared/conversations": typeof shared_conversations;
   "shared/plugins": typeof shared_plugins;
   "shared/secrets": typeof shared_secrets;
+  "shared/subscriptions": typeof shared_subscriptions;
 }>;
 
 /**

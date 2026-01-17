@@ -52,7 +52,7 @@ export function AppNavbar() {
   });
 
   return (
-    <nav className="sticky top-0 z-50 flex h-16 shrink-0 items-center justify-between border-b px-4 shadow-xs group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 lg:px-6 bg-background/80 backdrop-blur-xl">
+    <nav className="sticky top-0 flex h-16 shrink-0 items-center justify-between border-b px-4 shadow-xs group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 lg:px-6 bg-background/80 backdrop-blur-xl">
       <div className="flex items-center gap-2">
         <Button
           type="button"

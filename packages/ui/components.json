@@ -19,7 +19,6 @@
     "hooks": "@repo/ui/hooks"
   },
   "registries": {
-    "@ai-elements": "https://registry.ai-sdk.dev/{name}.json",
-    "@kibo-ui": "https://www.kibo-ui.com/r/{name}.json"
+    "@ai-elements": "https://registry.ai-sdk.dev/{name}.json"
   }
 }

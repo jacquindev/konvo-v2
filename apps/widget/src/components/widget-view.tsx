@@ -7,10 +7,11 @@ import type { WidgetScreen } from "@/lib/types";
 
 import { WidgetAuthScreen } from "./screens/widget-auth-screen";
 import { WidgetChatScreen } from "./screens/widget-chat-screen";
+import { WidgetContactScreen } from "./screens/widget-contact-screen";
 import { WidgetErrorScreen } from "./screens/widget-error-screen";
+import { WidgetInboxScreen } from "./screens/widget-inbox-screen";
 import { WidgetLoadingScreen } from "./screens/widget-loading-screen";
 import { WidgetSelectionScreen } from "./screens/widget-selection-screen";
-import { WidgetInboxScreen } from "./screens/widget-inbox-screen";
 import { WidgetVoiceScreen } from "./screens/widget-voice-screen";
 
 interface WidgetViewProps {
@@ -27,7 +28,7 @@ export function WidgetView({ organizationId }: WidgetViewProps) {
       case "chat":
         return <WidgetChatScreen />;
       case "contact":
-        return <p>TODO: Contact</p>;
+        return <WidgetContactScreen />;
       case "error":
         return <WidgetErrorScreen />;
       case "inbox":

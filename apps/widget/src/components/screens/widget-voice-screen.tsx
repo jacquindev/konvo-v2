@@ -53,7 +53,7 @@ export function WidgetVoiceScreen() {
         </div>
       </WidgetHeader>
       {transcript.length > 0 ? (
-        <Conversation className="h-full flex-1 overflow-y-auto">
+        <Conversation className="h-full">
           <ConversationContent>
             {transcript.map((message, index) => (
               <Message
@@ -71,7 +71,7 @@ export function WidgetVoiceScreen() {
           <ConversationScrollButton />
         </Conversation>
       ) : (
-        <div className="flex flex-1 h-full flex-col items-center justify-center gap-4">
+        <div className="flex h-full flex-col items-center justify-center gap-4">
           <div className="flex items-center justify-center rounded-full border border-border bg-muted p-3">
             <MicIcon className="size-6 shrink-0 text-muted-foreground" />
           </div>

@@ -8,7 +8,6 @@ import {
   DollarSignIcon,
   HomeIcon,
   InboxIcon,
-  KeyRoundIcon,
   LibraryBigIcon,
   PaletteIcon,
   ZapIcon,
@@ -45,7 +44,7 @@ export const routes = [
     group: "Main",
     items: [
       { label: "Conversations", href: "/conversations", icon: InboxIcon },
-      { label: "Credentials", href: "/credentials", icon: KeyRoundIcon },
+      //{ label: "Credentials", href: "/credentials", icon: KeyRoundIcon },
       { label: "Knowledge Base", href: "/knowledge-base", icon: LibraryBigIcon },
       { label: "Plugins", href: "/plugins", icon: BlocksIcon },
     ],

@@ -3,7 +3,7 @@ import type { LucideIcon } from "lucide-react";
 
 import type { Doc } from "@repo/backend/_generated/dataModel";
 
-export type PluginFeature = {
+export type Feature = {
   icon: LucideIcon;
   label: string;
   description: string | ReactNode;

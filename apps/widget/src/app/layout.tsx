@@ -40,7 +40,9 @@ export default function RootLayout({
           disableTransitionOnChange
         >
           <ConvexClientProvider>
-            <JotaiProvider>{children}</JotaiProvider>
+            <JotaiProvider>
+              <main className="w-screen h-screen">{children}</main>
+            </JotaiProvider>
           </ConvexClientProvider>
         </ThemeProvider>
       </body>

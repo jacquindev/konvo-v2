@@ -1,12 +1,7 @@
-import { PageContainer } from "@/components/page-container";
-import { PageHeader } from "@/components/page-header";
+import { SubscriptionsView } from "@/components/subscriptions/subscriptions-view";
 
 const Page = () => {
-  return (
-    <PageContainer header={<PageHeader title="Plans & Billing" />}>
-      plugins page
-    </PageContainer>
-  );
+  return <SubscriptionsView />;
 };
 
 export default Page;

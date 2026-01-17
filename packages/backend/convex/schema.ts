@@ -63,4 +63,9 @@ export default defineSchema({
       phoneNumber: v.optional(v.string()),
     }),
   }).index("by_organization_id", ["organizationId"]),
+
+  subscriptions: defineTable({
+    organizationId: v.string(),
+    status: v.string(),
+  }).index("by_organization_id", ["organizationId"]),
 });

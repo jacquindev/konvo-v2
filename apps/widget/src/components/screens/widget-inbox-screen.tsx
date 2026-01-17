@@ -22,6 +22,7 @@ import { ConversationStatusIcon } from "@repo/ui/components/shared/conversation-
 import { WidgetFooter } from "../widget-footer";
 import { WidgetHeader } from "../widget-header";
 import { InfiniteScrollTrigger } from "@repo/ui/components/shared/infinite-scroll-trigger";
+import { Id } from "@repo/backend/_generated/dataModel";
 
 export function WidgetInboxScreen() {
   const organizationId = useAtomValue(organizationIdAtom);
@@ -45,6 +46,11 @@ export function WidgetInboxScreen() {
       loadSize: 10,
     });
 
+  const onSelect = (id: Id<"conversations">) => {
+    setConversationId(id);
+    setScreen("chat");
+  };
+
   return (
     <>
       <WidgetHeader>
@@ -66,6 +72,7 @@ export function WidgetInboxScreen() {
               key={conversation._id}
               role="button"
               className="min-h-20 group rounded-lg border border-border bg-muted/60 shadow-xs hover:border-primary hover:shadow-sm motion-safe:transition-all motion-safe:duration-300 hover:-translate-y-0.5 p-4"
+              onClick={() => onSelect(conversation._id)}
             >
               <div className="flex flex-col gap-4 w-full overflow-hidden text-start">
                 <div className="flex w-full items-center justify-between gap-4">
