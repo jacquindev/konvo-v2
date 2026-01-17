@@ -1,12 +1,7 @@
-import { PageContainer } from "@/components/page-container";
-import { PageHeader } from "@/components/page-header";
+import { PluginsView } from "@/components/plugins/plugins-view";
 
 const Page = () => {
-  return (
-    <PageContainer header={<PageHeader title="Plugins" />}>
-      plugins page
-    </PageContainer>
-  );
+  return <PluginsView />;
 };
 
 export default Page;

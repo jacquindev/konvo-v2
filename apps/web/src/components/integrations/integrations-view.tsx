@@ -26,9 +26,9 @@ const integrations = [
 ];
 
 export function IntegrationsView() {
-  const { organization } = useOrganization();
-
   const [openModal, setOpenModal] = useState(false);
+
+  const { organization } = useOrganization();
 
   return (
     <>
