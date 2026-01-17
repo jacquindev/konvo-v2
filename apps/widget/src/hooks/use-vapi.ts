@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
 import Vapi from "@vapi-ai/web";
+import { useAtomValue } from "jotai";
+
+import { vapiSecretsAtom, widgetSettingsAtom } from "@/lib/atoms";
 
 interface TranscriptMessage {
   role: "user" | "assistant";
@@ -13,9 +16,13 @@ export function useVapi() {
   const [isConnecting, setIsConnecting] = useState(false);
   const [isSpeaking, setIsSpeaking] = useState(false);
 
+  const vapiSecrets = useAtomValue(vapiSecretsAtom);
+  const widgetSettings = useAtomValue(widgetSettingsAtom);
+
   useEffect(() => {
-    // TODO: Add user credential
-    const vapiInstance = new Vapi("");
+    if (!vapiSecrets) return;
+
+    const vapiInstance = new Vapi(vapiSecrets.publicApiKey);
     setVapi(vapiInstance);
 
     vapiInstance.on("call-start", () => {
@@ -58,14 +65,17 @@ export function useVapi() {
     return () => {
       vapiInstance?.stop();
     };
-  }, []);
+  }, [vapiSecrets]);
 
   const startCall = () => {
+    if (!vapiSecrets || !widgetSettings?.vapiSettings?.assistantId) {
+      return;
+    }
+
     setIsConnecting(true);
 
     if (vapi) {
-      // TODO: Add user API
-      vapi.start("");
+      vapi.start(widgetSettings.vapiSettings.assistantId);
     }
   };
 

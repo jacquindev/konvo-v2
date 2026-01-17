@@ -12,6 +12,7 @@ import {
   loadingMessageAtom,
   organizationIdAtom,
   screenAtom,
+  vapiSecretsAtom,
   widgetSettingsAtom,
 } from "@/lib/atoms";
 import type { InitStep } from "@/lib/types";
@@ -48,6 +49,7 @@ export function WidgetLoadingScreen({
   const setScreen = useSetAtom(screenAtom);
   const setOrganizationId = useSetAtom(organizationIdAtom);
   const setWidgetSettings = useSetAtom(widgetSettingsAtom);
+  const setVapiSecrets = useSetAtom(vapiSecretsAtom);
 
   // Step 1: Validate Organization
   const validateOrganization = useAction(api.public.organizations.validate);
@@ -125,9 +127,9 @@ export function WidgetLoadingScreen({
 
     setLoadingMessage("Loading widget settings...");
 
-    if (widgetSettings !== undefined && organizationId) {
+    if (widgetSettings !== undefined) {
       setWidgetSettings(widgetSettings);
-      setStep("done");
+      setStep("vapi");
     }
   }, [
     organizationId,
@@ -137,6 +139,30 @@ export function WidgetLoadingScreen({
     widgetSettings,
   ]);
 
+  // Step 4: Load Vapi secrets
+  const getVapiSecrets = useAction(api.public.secrets.getVapiSecrets);
+  useEffect(() => {
+    if (step !== "vapi") return;
+
+    if (!organizationId) {
+      setErrorMessage("Organization ID is required.");
+      setScreen("error");
+      return;
+    }
+
+    setLoadingMessage("Loading voice features...");
+    getVapiSecrets({ organizationId })
+      .then((secrets) => {
+        setVapiSecrets(secrets);
+        setStep("done");
+      })
+      .catch(() => {
+        setVapiSecrets(null);
+        setStep("done");
+      });
+  }, [getVapiSecrets, organizationId, setLoadingMessage, setVapiSecrets, step]);
+
+  // Final step
   useEffect(() => {
     if (step !== "done") return;
 

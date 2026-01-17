@@ -3,7 +3,12 @@
 import { useState } from "react";
 import { useMutation } from "convex/react";
 import { useAtomValue, useSetAtom } from "jotai";
-import { ChevronRightIcon, MessageCircleMoreIcon } from "lucide-react";
+import {
+  ChevronRightIcon,
+  MessageCircleMoreIcon,
+  MicIcon,
+  PhoneIcon,
+} from "lucide-react";
 
 import { api } from "@repo/backend/_generated/api";
 import { cn } from "@repo/ui/lib/utils";
@@ -12,8 +17,10 @@ import {
   contactSessionIdAtomFamily,
   conversationIdAtom,
   errorMessageAtom,
+  hasVapiSecretsAtom,
   organizationIdAtom,
   screenAtom,
+  widgetSettingsAtom,
 } from "@/lib/atoms";
 
 import {
@@ -34,6 +41,8 @@ export function WidgetSelectionScreen() {
   const setErrorMessage = useSetAtom(errorMessageAtom);
   const setConversationId = useSetAtom(conversationIdAtom);
 
+  const widgetSettings = useAtomValue(widgetSettingsAtom);
+  const hasVapiSecrets = useAtomValue(hasVapiSecretsAtom);
   const organizationId = useAtomValue(organizationIdAtom);
   const contactSessionId = useAtomValue(
     contactSessionIdAtomFamily(organizationId || "")
@@ -101,6 +110,56 @@ export function WidgetSelectionScreen() {
             <ChevronRightIcon className="size-4 shrink-0 text-muted-foreground" />
           </ItemActions>
         </Item>
+
+        {hasVapiSecrets && widgetSettings?.vapiSettings?.assistantId && (
+          <Item
+            role="button"
+            variant="outline"
+            className={cn(
+              "group border-border bg-muted/60 shadow-xs hover:border-primary hover:shadow-sm motion-safe:transition-all motion-safe:duration-300 hover:-translate-y-0.5",
+              isStartingNewChat && "opacity-50 pointer-events-none"
+            )}
+            onClick={() => setScreen("voice")}
+          >
+            <ItemMedia
+              variant="icon"
+              className="group-hover:border-primary/40 transition rounded-md"
+            >
+              <MicIcon className="group-hover:text-primary" />
+            </ItemMedia>
+            <ItemContent>
+              <ItemTitle>Start Voice Call</ItemTitle>
+            </ItemContent>
+            <ItemActions>
+              <ChevronRightIcon className="size-4 shrink-0 text-muted-foreground" />
+            </ItemActions>
+          </Item>
+        )}
+
+        {hasVapiSecrets && widgetSettings?.vapiSettings?.phoneNumber && (
+          <Item
+            role="button"
+            variant="outline"
+            className={cn(
+              "group border-border bg-muted/60 shadow-xs hover:border-primary hover:shadow-sm motion-safe:transition-all motion-safe:duration-300 hover:-translate-y-0.5",
+              isStartingNewChat && "opacity-50 pointer-events-none"
+            )}
+            onClick={() => setScreen("contact")}
+          >
+            <ItemMedia
+              variant="icon"
+              className="group-hover:border-primary/40 transition rounded-md"
+            >
+              <PhoneIcon className="group-hover:text-primary" />
+            </ItemMedia>
+            <ItemContent>
+              <ItemTitle>Call Us</ItemTitle>
+            </ItemContent>
+            <ItemActions>
+              <ChevronRightIcon className="size-4 shrink-0 text-muted-foreground" />
+            </ItemActions>
+          </Item>
+        )}
       </div>
       <WidgetFooter />
     </>

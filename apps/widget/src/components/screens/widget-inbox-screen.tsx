@@ -47,7 +47,7 @@ export function WidgetInboxScreen() {
 
   return (
     <>
-      <WidgetHeader className="flex items-center justify-between">
+      <WidgetHeader>
         <div className="flex items-center gap-2">
           <Button
             size="icon"

@@ -73,7 +73,7 @@ export function KnowledgeQuickActionCard({
     <Card
       role="button"
       className={cn(
-        "group border-[1.5px] hover:scale-105 motion-safe:transition-all motion-safe:duration-300",
+        "group border-[1.5px] hover:scale-[1.02] motion-safe:transition-all motion-safe:duration-300",
         className
       )}
       onClick={onClick}
