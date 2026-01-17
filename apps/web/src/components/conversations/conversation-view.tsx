@@ -60,7 +60,7 @@ export function ConversationView({ conversationId }: ConversationViewProps) {
   const messages = useThreadMessages(
     api.private.messages.getMany,
     conversation?.threadId ? { threadId: conversation.threadId } : "skip",
-    { initialNumItems: 10 }
+    { initialNumItems: 10 },
   );
 
   const {
@@ -89,14 +89,14 @@ export function ConversationView({ conversationId }: ConversationViewProps) {
     } catch (error) {
       const errorMessage =
         error instanceof ConvexError
-          ? error.message
+          ? (error.data as { message: string }).message
           : "Failed to save message.";
       toast.error(errorMessage);
     }
   };
 
   const updateConversationStatus = useMutation(
-    api.private.conversations.updateStatus
+    api.private.conversations.updateStatus,
   );
 
   const toggleStatus = async () => {
@@ -119,7 +119,7 @@ export function ConversationView({ conversationId }: ConversationViewProps) {
     } catch (error) {
       const errorMessage =
         error instanceof ConvexError
-          ? error.message
+          ? (error.data as { message: string }).message
           : "Unable to update conversation status.";
       toast.error(errorMessage);
     } finally {
@@ -140,7 +140,7 @@ export function ConversationView({ conversationId }: ConversationViewProps) {
     } catch (error) {
       const errorMessage =
         error instanceof ConvexError
-          ? error.message
+          ? (error.data as { message: string }).message
           : "Unable to enhance response with AI.";
       toast.error(errorMessage);
     } finally {
@@ -175,14 +175,14 @@ export function ConversationView({ conversationId }: ConversationViewProps) {
                   key={index}
                   className={cn(
                     "group flex w-full items-end justify-end gap-2 py-2 [&>div]:max-w-[80%]",
-                    isUser ? "is-user" : "is-assistant flex-row-reverse"
+                    isUser ? "is-user" : "is-assistant flex-row-reverse",
                   )}
                 >
                   <Skeleton
                     className={cn(
                       "h-10 rounded-lg bg-muted",
                       width,
-                      isUser && "bg-secondary"
+                      isUser && "bg-secondary",
                     )}
                   />
                   <Skeleton className="size-9 rounded-full" />

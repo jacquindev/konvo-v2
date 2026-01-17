@@ -19,7 +19,7 @@ export const create = action({
       internal.shared.contactSessions.getOne,
       {
         contactSessionId: args.contactSessionId,
-      }
+      },
     );
 
     if (!contactSession || contactSession.expiresAt < Date.now()) {
@@ -33,7 +33,7 @@ export const create = action({
       internal.shared.conversations.getByThreadId,
       {
         threadId: args.threadId,
-      }
+      },
     );
 
     if (!conversation) {
@@ -51,8 +51,15 @@ export const create = action({
     }
 
     // TODO: Implement subscription check
+    const subscription = await ctx.runQuery(
+      internal.shared.subscriptions.getByOrganizationId,
+      {
+        organizationId: conversation.organizationId,
+      },
+    );
 
-    const shouldTriggerAgent = conversation.status === "unresolved";
+    const shouldTriggerAgent =
+      conversation.status === "unresolved" && subscription?.status === "active";
 
     if (shouldTriggerAgent) {
       await supportAgent.generateText(
@@ -65,7 +72,7 @@ export const create = action({
             escalateConversationTool: escalateConversation,
             searchTool: search,
           },
-        }
+        },
       );
     } else {
       await supportAgent.saveMessage(ctx, {

@@ -7,6 +7,7 @@ import {
   vEntryId,
 } from "@convex-dev/rag";
 
+import { internal } from "../_generated/api";
 import type { Id } from "../_generated/dataModel";
 import { action, mutation, query } from "../_generated/server";
 import { extractTextContent } from "../lib/extractTextContent";
@@ -39,6 +40,21 @@ export const addFile = action({
       throw new ConvexError({
         code: "NOT_FOUND",
         message: "Organization not found.",
+      });
+    }
+
+    const subscription = await ctx.runQuery(
+      internal.shared.subscriptions.getByOrganizationId,
+      {
+        organizationId: orgId,
+      },
+    );
+
+    if (subscription?.status !== "active") {
+      throw new ConvexError({
+        code: "FORBIDDEN",
+        message:
+          "You need to have an active subscription to perform this action.",
       });
     }
 
@@ -182,7 +198,7 @@ export const list = query({
     });
 
     const files = await Promise.all(
-      results.page.map((entry) => convertEntryToPublicFile(ctx, entry))
+      results.page.map((entry) => convertEntryToPublicFile(ctx, entry)),
     );
 
     const filteredFiles = args.category

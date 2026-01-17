@@ -30,7 +30,11 @@ export function useVapiPhoneNumbers(): {
         setData(result);
         setError(null);
       } catch (error) {
-        if (error instanceof Error || error instanceof ConvexError) {
+        if (error instanceof ConvexError) {
+          if (cancelled) return;
+          setError(error);
+          toast.error((error.data as { message: string }).message);
+        } else if (error instanceof Error) {
           if (cancelled) return;
           setError(error);
           toast.error(error.message);
@@ -74,7 +78,11 @@ export function useVapiAssistants(): {
         setData(result);
         setError(null);
       } catch (error) {
-        if (error instanceof Error || error instanceof ConvexError) {
+        if (error instanceof ConvexError) {
+          if (cancelled) return;
+          setError(error);
+          toast.error((error.data as { message: string }).message);
+        } else if (error instanceof Error) {
           if (cancelled) return;
           setError(error);
           toast.error(error.message);

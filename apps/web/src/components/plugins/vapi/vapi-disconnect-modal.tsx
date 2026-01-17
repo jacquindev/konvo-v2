@@ -35,7 +35,7 @@ export function VapiDisconnectModal({
     } catch (error) {
       const errorMessage =
         error instanceof ConvexError
-          ? error.message
+          ? (error.data as { message: string }).message
           : "Failed to remove Vapi credentials. Please try again.";
       toast.error(errorMessage);
     } finally {

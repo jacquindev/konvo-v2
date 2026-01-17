@@ -42,7 +42,7 @@ export function KnowledgeRemoveModal({
     } catch (error) {
       const errorMessage =
         error instanceof ConvexError
-          ? error.message
+          ? (error.data as { message: string }).message
           : "Unable to delete file. Please try again.";
       toast.error(errorMessage);
     } finally {

@@ -109,7 +109,7 @@ export function AppSidebar() {
                         "hover:scale-[1.02] hover:shadow-sm motion-safe:transition-all motion-safe:duration-300",
                         "hover:bg-linear-to-br/oklch from-sidebar from-5% via-[#7033ff] via-30% to-sidebar hover:text-white hover:text-shadow-black/30 hover:text-shadow-xs dark:via-[#8c5cff]",
                         isActive &&
-                          "scale-[1.02] bg-linear-to-br/oklch text-white! shadow-sm text-shadow-black/30 text-shadow-xs"
+                          "scale-[1.02] bg-linear-to-br/oklch text-white! shadow-sm text-shadow-black/30 text-shadow-xs",
                       )}
                     >
                       <Link href={item.href} prefetch>
@@ -133,6 +133,8 @@ export function AppSidebar() {
               <OrganizationSwitcher
                 hidePersonal
                 skipInvitationScreen
+                afterCreateOrganizationUrl={pathname}
+                afterSelectOrganizationUrl={pathname}
                 appearance={{
                   elements: {
                     rootBox: "w-full! h-12! group-data-[collapsible=icon]:h-8!",

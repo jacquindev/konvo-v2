@@ -1,6 +1,7 @@
 import { ConvexError, v } from "convex/values";
 
 import { mutation, query } from "../_generated/server";
+import { internal } from "../_generated/api";
 
 export const getOne = query({
   args: {},
@@ -61,6 +62,21 @@ export const upsert = mutation({
       throw new ConvexError({
         code: "NOT_FOUND",
         message: "Organization not found.",
+      });
+    }
+
+    const subscription = await ctx.runQuery(
+      internal.shared.subscriptions.getByOrganizationId,
+      {
+        organizationId: orgId,
+      },
+    );
+
+    if (subscription?.status !== "active") {
+      throw new ConvexError({
+        code: "FORBIDDEN",
+        message:
+          "You need to have an active subscription to perform this action.",
       });
     }
 

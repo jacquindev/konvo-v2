@@ -65,7 +65,7 @@ export function KnowledgeUploadTab({
     } catch (error) {
       const errorMessage =
         error instanceof ConvexError
-          ? error.message
+          ? (error.data as { message: string }).message
           : "Failed to add your content to knowledge base. Please try again.";
       toast.error(errorMessage);
     } finally {

@@ -5,7 +5,6 @@ export const env = createEnv({
   server: {
     CLERK_SECRET_KEY: z.string().min(1),
     SENTRY_AUTH_TOKEN: z.string().min(1),
-    FIRECRAWL_API_KEY: z.string().min(1),
   },
   experimental__runtimeEnv: process.env,
 });

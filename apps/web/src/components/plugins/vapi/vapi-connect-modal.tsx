@@ -51,7 +51,7 @@ export function VapiConnectModal({ open, setOpen }: VapiConnectModalProps) {
     } catch (error) {
       const errorMessage =
         error instanceof ConvexError
-          ? error.message
+          ? (error.data as { message: string }).message
           : "Failed to add Vapi API keys. Please try again.";
       toast.error(errorMessage);
     }

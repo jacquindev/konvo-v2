@@ -52,7 +52,7 @@ export function ConversationsSidebar() {
   const conversations = usePaginatedQuery(
     api.private.conversations.getMany,
     { status: statusFilter === "all" ? undefined : statusFilter },
-    { initialNumItems: 10 }
+    { initialNumItems: 10 },
   );
 
   const {
@@ -106,7 +106,7 @@ export function ConversationsSidebar() {
                             "hover:scale-[1.02] hover:shadow-sm motion-safe:transition-all motion-safe:duration-300",
                             "hover:bg-linear-to-br/oklch from-sidebar from-5% via-[#7033ff] via-30% to-sidebar hover:text-white hover:text-shadow-black/30 hover:text-shadow-xs dark:via-[#8c5cff]",
                             isActive &&
-                              "scale-[1.02] bg-linear-to-br/oklch text-white! shadow-sm text-shadow-black/30 text-shadow-xs"
+                              "scale-[1.02] bg-linear-to-br/oklch text-white! shadow-sm text-shadow-black/30 text-shadow-xs",
                           )}
                         >
                           <Link href={item.href} prefetch>
@@ -127,17 +127,19 @@ export function ConversationsSidebar() {
           <OrganizationSwitcher
             hidePersonal
             skipInvitationScreen
+            afterCreateOrganizationUrl="/conversations"
+            afterSelectOrganizationUrl="/conversations"
             appearance={{
               elements: {
                 rootBox: "h-12! w-full!",
                 avatarBox: "size-8! rounded-lg!",
                 organizationSwitcherTrigger: cn(
                   "w-full! justify-start! hover:bg-sidebar-accent!",
-                  !openMobile && "p-0! size-8!"
+                  !openMobile && "p-0! size-8!",
                 ),
                 organizationSwitcherTriggerIcon: cn(
                   "ml-auto! text-muted-foreground!",
-                  !openMobile && "hidden!"
+                  !openMobile && "hidden!",
                 ),
                 organizationPreviewTextContainer: "font-semibold!",
               },
@@ -189,7 +191,7 @@ export function ConversationsSidebar() {
                       conversation.lastMessage?.message?.role !== "user";
 
                     const country = getCountryFromTimezone(
-                      conversation.contactSession?.metadata?.timezone
+                      conversation.contactSession?.metadata?.timezone,
                     );
 
                     const countryFlagUrl = country?.code
@@ -203,13 +205,13 @@ export function ConversationsSidebar() {
                         className={cn(
                           "group/item relative flex items-start p-4 gap-2.5 border-b motion-safe:transition-all motion-safe:duration-300 hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                           isActive &&
-                            "bg-sidebar-accent text-sidebar-accent-foreground"
+                            "bg-sidebar-accent text-sidebar-accent-foreground",
                         )}
                       >
                         <div
                           className={cn(
                             "absolute -translate-y-1/2 top-1/2 left-0 w-1 h-[64%] rounded-r-full bg-primary opacity-0 group-hover/item:opacity-100 transition-opacity",
-                            isActive && "opacity-100"
+                            isActive && "opacity-100",
                           )}
                         />
                         <GeneratedAvatar
@@ -219,7 +221,7 @@ export function ConversationsSidebar() {
                           badgeClassName={cn(
                             "group-hover/item:border-sidebar-accent group-hover/item:bg-sidebar-accent",
                             isActive &&
-                              "border-sidebar-accent bg-sidebar-accent"
+                              "border-sidebar-accent bg-sidebar-accent",
                           )}
                         />
                         <div className="flex-1">
@@ -230,7 +232,7 @@ export function ConversationsSidebar() {
                             <span className="ml-auto shrink-0 text-muted-foreground text-xs">
                               {formatDistanceToNow(
                                 conversation.contactSession._creationTime,
-                                { addSuffix: true }
+                                { addSuffix: true },
                               )}
                             </span>
                           </div>
@@ -243,7 +245,7 @@ export function ConversationsSidebar() {
                                 className={cn(
                                   "line-clamp-1 text-pretty text-xs text-muted-foreground",
                                   !isLastMessageFromOperator &&
-                                    "font-semibold text-foreground"
+                                    "font-semibold text-foreground",
                                 )}
                               >
                                 {conversation.lastMessage?.text}
@@ -253,7 +255,7 @@ export function ConversationsSidebar() {
                               status={conversation.status}
                               className={cn(
                                 "scale-80 opacity-80 group-hover/item:opacity-100",
-                                isActive && "opacity-100"
+                                isActive && "opacity-100",
                               )}
                             />
                           </div>

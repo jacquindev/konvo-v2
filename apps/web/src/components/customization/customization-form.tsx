@@ -113,7 +113,7 @@ export function CustomizationForm({
     } catch (error) {
       const errorMessage =
         error instanceof ConvexError
-          ? error.message
+          ? (error.data as { message: string }).message
           : "Failed to configure widget settings. Please try again later.";
       toast.error(errorMessage);
     }
