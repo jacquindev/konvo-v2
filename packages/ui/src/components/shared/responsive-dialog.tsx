@@ -57,13 +57,13 @@ export const ResponsiveDialog = ({
         <DrawerContent
           className={cn(
             "rounded-none border-none p-0 backdrop-blur-2xl dark:bg-card/60",
-            className
+            className,
           )}
         >
           <DrawerHeader
             className={cn(
               "flex flex-col items-center justify-center gap-2",
-              !title && "sr-only"
+              !title && "sr-only",
             )}
           >
             {Icon ? (
@@ -71,7 +71,7 @@ export const ResponsiveDialog = ({
                 <div
                   className={cn(
                     "relative mb-4 size-8 overflow-hidden rounded-md bg-transparent",
-                    iconClassName
+                    iconClassName,
                   )}
                 >
                   <Image
@@ -107,14 +107,14 @@ export const ResponsiveDialog = ({
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent
         className={cn(
-          "w-full rounded-xl border-none backdrop-blur-2xl sm:max-w-xl dark:bg-card/60",
-          className
+          "w-full rounded-xl backdrop-blur-2xl sm:max-w-xl dark:bg-card/60",
+          className,
         )}
       >
         <DialogHeader
           className={cn(
             "flex flex-col items-center justify-center gap-2",
-            !title && "sr-only"
+            !title && "sr-only",
           )}
         >
           {Icon ? (
@@ -122,7 +122,7 @@ export const ResponsiveDialog = ({
               <div
                 className={cn(
                   "relative mb-4 size-8 overflow-hidden rounded-md bg-transparent",
-                  iconClassName
+                  iconClassName,
                 )}
               >
                 <Image

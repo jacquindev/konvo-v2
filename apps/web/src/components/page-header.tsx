@@ -26,7 +26,7 @@ export function PageHeader({
             <div
               className={cn(
                 "size-8 lg:size-10 bg-transparent aspect-square relative shink-0 rounded-md overflow-hidden",
-                iconClassName
+                iconClassName,
               )}
             >
               <Image
@@ -37,7 +37,11 @@ export function PageHeader({
               />
             </div>
           ) : (
-            <Icon className={cn("size-7 shrink-0 lg:size-8", iconClassName)} />
+            <div className="rounded-lg border border-primary bg-radial from-background to-primary/60 flex items-center justify-center size-8 lg:size-10 shadow-primary/60 shadow-md">
+              <Icon
+                className={cn("size-5 shrink-0 lg:size-6", iconClassName)}
+              />
+            </div>
           ))}
         <div className="space-y-1">
           <h1 className="text-2xl font-semibold md:text-3xl">{title}</h1>
