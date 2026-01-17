@@ -50,16 +50,8 @@ export const create = action({
       });
     }
 
-    // TODO: Implement subscription check
-    const subscription = await ctx.runQuery(
-      internal.shared.subscriptions.getByOrganizationId,
-      {
-        organizationId: conversation.organizationId,
-      },
-    );
-
     const shouldTriggerAgent =
-      conversation.status === "unresolved" && subscription?.status === "active";
+      conversation.status === "unresolved";
 
     if (shouldTriggerAgent) {
       await supportAgent.generateText(

@@ -18,6 +18,7 @@ export type EntryMetadata = {
   uploadedBy: string;
   filename: string;
   category: string | null;
+  sourceUrl?: string;
 };
 
 function formatFileSize(bytes: number): string {
@@ -51,9 +52,13 @@ export async function convertEntryToPublicFile(
       console.error("Failed to to get storage metadata:", error);
     }
   }
+  
+  const entryKey = entry.key ?? "Untitled"
 
-  const filename = entry.key || "Untitled";
-  const extension = filename.split(".").pop()?.toLowerCase() || "txt";
+  const isWebsite = entryKey.startsWith("http://") || entryKey.startsWith("https://")
+
+  const filename = entryKey ?? metadata?.filename ?? "Untitled";
+  const extension = entryKey.split(".").pop()?.toLowerCase() || "txt";
 
   let status: "ready" | "processing" | "error" = "error";
 
@@ -68,7 +73,7 @@ export async function convertEntryToPublicFile(
   return {
     id: entry.entryId,
     name: filename,
-    type: extension,
+    type: isWebsite ? "web" : extension,
     size: fileSize,
     status,
     url,

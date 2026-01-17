@@ -31,12 +31,22 @@ export function KnowledgeModal({
     {
       value: "website",
       label: "Website",
-      content: <KnowledgeWebsiteTab onOpenChange={onOpenChange} />,
+      content: (
+        <KnowledgeWebsiteTab
+          onOpenChange={onOpenChange}
+          onFileUploaded={onFileUploaded}
+        />
+      ),
     },
     {
       value: "text",
       label: "Q&A / Text",
-      content: <KnowledgeTextTab onOpenChange={onOpenChange} />,
+      content: (
+        <KnowledgeTextTab
+          onOpenChange={onOpenChange}
+          onFileUploaded={onFileUploaded}
+        />
+      ),
     },
     {
       value: "upload",

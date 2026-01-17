@@ -3,20 +3,20 @@
 import { useState } from "react";
 import { useAction } from "convex/react";
 import { ConvexError } from "convex/values";
+import { UploadIcon } from "lucide-react";
 import { toast } from "sonner";
 
 import { api } from "@repo/backend/_generated/api";
 
-import { Button } from "@repo/ui/components/ui/button";
-import { Field, FieldGroup, FieldLabel } from "@repo/ui/components/ui/field";
-import { Input } from "@repo/ui/components/ui/input";
-import { Spinner } from "@repo/ui/components/ui/spinner";
 import {
   Dropzone,
   DropzoneContent,
   DropzoneEmptyState,
 } from "@repo/ui/components/shared/dropzone";
-import { UploadIcon } from "lucide-react";
+import { Button } from "@repo/ui/components/ui/button";
+import { Field, FieldGroup, FieldLabel } from "@repo/ui/components/ui/field";
+import { Input } from "@repo/ui/components/ui/input";
+import { Spinner } from "@repo/ui/components/ui/spinner";
 
 interface KnowledgeUploadTabProps {
   onOpenChange?: (open: boolean) => void;

@@ -69,7 +69,7 @@ export function ConversationStatusButton({
               config.bgColor
             )}
           >
-            <Icon /> Escalated
+            <Icon /> Unresolved
           </Button>
         </Hint>
       );

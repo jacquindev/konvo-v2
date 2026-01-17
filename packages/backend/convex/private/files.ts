@@ -16,6 +16,135 @@ import {
   convertEntryToPublicFile,
   EntryMetadata,
 } from "../lib/convertEntryToPublicFile";
+import { contentHashFromString, scrapeWithFirecrawl } from "../lib/firecrawl";
+
+export const addUrl = action({
+  args: {
+    url: v.string(),
+    category: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (identity === null) {
+      throw new ConvexError({
+        code: "UNAUTHORIZED",
+        message: "Unauthenticated.",
+      });
+    }
+
+    const orgId = identity.organization_id as string;
+
+    if (!orgId) {
+      throw new ConvexError({
+        code: "NOT_FOUND",
+        message: "Organization not found.",
+      });
+    }
+
+    const scraped = await scrapeWithFirecrawl(args.url);
+
+    // Normalized before hashing
+    const normalized = scraped.content.replace(/\s+/g, " ").trim();
+    const contentHash = await contentHashFromString(normalized);
+
+    // Store markdown snapshot
+    const blob = new Blob([normalized], { type: "text/markdown" });
+    const storageId = await ctx.storage.store(blob);
+
+    const { entryId, created } = await rag.add(ctx, {
+      namespace: orgId,
+      key: args.url,
+      title: scraped.title ?? args.url,
+      text: normalized,
+      contentHash,
+      metadata: {
+        storageId,
+        uploadedBy: orgId,
+        filename: scraped.title ?? args.url,
+        category: args.category ?? null,
+        sourceUrl: args.url,
+      } satisfies EntryMetadata,
+    });
+
+    // If content already existed, cleanup snapshot
+    if (!created) {
+      console.debug("Entry already exists, skipping upload metadata.");
+      await ctx.storage.delete(storageId);
+    }
+
+    return {
+      entryId,
+      url: await ctx.storage.getUrl(storageId),
+    };
+  },
+});
+
+export const addManualText = action({
+  args: {
+    title: v.string(),
+    content: v.string(),
+    category: v.optional(v.string()),
+  },
+  handler: async (ctx, args) => {
+    const identity = await ctx.auth.getUserIdentity();
+
+    if (identity === null) {
+      throw new ConvexError({
+        code: "UNAUTHORIZED",
+        message: "Unauthenticated.",
+      });
+    }
+
+    const orgId = identity.organization_id as string;
+
+    if (!orgId) {
+      throw new ConvexError({
+        code: "NOT_FOUND",
+        message: "Organization not found.",
+      });
+    }
+
+    // Normalize text before hashing & storage
+    const normalized = args.content.replace(/\s+/g, " ").trim();
+
+    if (!normalized) {
+      throw new ConvexError({
+        code: "BAD_REQUEST",
+        message: "Text content cannot be empty.",
+      });
+    }
+
+    const contentHash = await contentHashFromString(normalized);
+    const blob = new Blob([normalized], { type: "text/plain" });
+    const storageId = await ctx.storage.store(blob);
+
+    const { entryId, created } = await rag.add(ctx, {
+      namespace: orgId,
+      key: `${args.title}.txt`,
+      title: args.title,
+      text: normalized,
+      contentHash,
+      metadata: {
+        storageId,
+        uploadedBy: orgId,
+        filename: args.title,
+        category: args.category ?? null,
+      } satisfies EntryMetadata,
+    });
+
+    // Cleanup if already exists
+    if (!created) {
+      console.debug("Manual text already exists, skipping upload metadata.");
+      await ctx.storage.delete(storageId);
+    }
+
+    return {
+      entryId,
+      url: await ctx.storage.getUrl(storageId),
+    };
+  },
+});
 
 export const addFile = action({
   args: {
@@ -40,21 +169,6 @@ export const addFile = action({
       throw new ConvexError({
         code: "NOT_FOUND",
         message: "Organization not found.",
-      });
-    }
-
-    const subscription = await ctx.runQuery(
-      internal.shared.subscriptions.getByOrganizationId,
-      {
-        organizationId: orgId,
-      },
-    );
-
-    if (subscription?.status !== "active") {
-      throw new ConvexError({
-        code: "FORBIDDEN",
-        message:
-          "You need to have an active subscription to perform this action.",
       });
     }
 
@@ -198,7 +312,7 @@ export const list = query({
     });
 
     const files = await Promise.all(
-      results.page.map((entry) => convertEntryToPublicFile(ctx, entry)),
+      results.page.map((entry) => convertEntryToPublicFile(ctx, entry))
     );
 
     const filteredFiles = args.category

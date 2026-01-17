@@ -49,6 +49,7 @@ export function KnowledgeBaseView() {
         onOpenChange={setOpenModal}
         activeTab={activeTab}
         setActiveTab={setActiveTab}
+        onFileUploaded={() => setOpenModal(false)}
       />
       <KnowledgeQuickActions setOpen={handleOpenModal} />
       <Separator />
