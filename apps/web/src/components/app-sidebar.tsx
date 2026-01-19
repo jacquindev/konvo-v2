@@ -10,9 +10,11 @@ import {
   InboxIcon,
   LibraryBigIcon,
   PaletteIcon,
+  SettingsIcon,
+  UserRoundCogIcon,
   ZapIcon,
 } from "lucide-react";
-import { OrganizationSwitcher } from "@clerk/nextjs";
+
 
 import { isRouteActive } from "@/lib/utils";
 import { cn } from "@repo/ui/lib/utils";
@@ -33,6 +35,7 @@ import {
   SidebarSeparator,
   useSidebar,
 } from "@repo/ui/components/ui/sidebar";
+import { OrgSwitcher } from "./auth/org-switcher";
 
 /* prettier-ignore */
 export const routes = [
@@ -61,6 +64,8 @@ export const routes = [
     group: "Account",
     items: [
       { label: "Plans & Billing", href: "/billing", icon: DollarSignIcon },
+      { label: "Profile", href: "/profile", icon: UserRoundCogIcon },
+      { label: "Settings", href: "/settings", icon: SettingsIcon }
     ]
   }
 ];
@@ -130,26 +135,7 @@ export function AppSidebar() {
         <SidebarMenu>
           <SidebarMenuItem>
             <SidebarMenuButton asChild size="lg">
-              <OrganizationSwitcher
-                hidePersonal
-                skipInvitationScreen
-                afterCreateOrganizationUrl={pathname}
-                afterSelectOrganizationUrl={pathname}
-                appearance={{
-                  elements: {
-                    rootBox: "w-full! h-12! group-data-[collapsible=icon]:h-8!",
-                    avatarBox: "group-data-[collapsible=icon]:size-6! size-8!",
-                    organizationSwitcherTrigger:
-                      "motion-safe:transition-all! motion-safe:duration-300! w-full! justify-start! group-data-[collapsible=icon]:size-8! hover:bg-sidebar-accent! group-data-[collapsible=icon]:p-2!",
-                    organizationSwitcherTriggerIcon:
-                      "group-data-[collapsible=icon]:hidden! ml-auto! text-muted-foreground!",
-                    organizationPreview:
-                      "group-data-[collapsible=icon]:justify-center! gap-3!",
-                    organizationPreviewTextContainer:
-                      "group-data-[collapsible=icon]:hidden! font-semibold! text-sidebar-foreground!",
-                  },
-                }}
-              />
+              <OrgSwitcher redirectUrl={pathname} />
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>

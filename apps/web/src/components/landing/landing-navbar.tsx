@@ -50,7 +50,7 @@ export function LandingNavbar() {
           )}
         >
           <div className="relative flex flex-wrap items-center justify-between gap-6 py-3 lg:gap-0">
-            <div className="flex w-full justify-between lg:w-auto">
+            <div className="animate-in fade-in-20 duration-500 flex w-full justify-between lg:w-auto">
               <Link href="/" className="flex items-center gap-x-1">
                 <Image
                   src="/logo.png"
@@ -83,7 +83,7 @@ export function LandingNavbar() {
               </Button>
             </div>
 
-            <div className="absolute inset-0 m-auto hidden size-fit lg:block">
+            <div className="animate-in fade-in-20 duration-500 not-first:not-[]:absolute inset-0 m-auto hidden size-fit lg:block">
               <ul className="flex gap-8 text-sm font-medium">
                 {navItems.map((item) => (
                   <li key={item.label}>
@@ -98,7 +98,7 @@ export function LandingNavbar() {
               </ul>
             </div>
 
-            <div className="z-20 mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border border-white/10 bg-black/60 py-6 shadow-2xl shadow-zinc-300/50 backdrop-blur-2xl in-data-[state=active]:block md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-0 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none lg:in-data-[state=active]:flex">
+            <div className="animate-in fade-in-20 duration-500 z-20 mb-6 hidden w-full flex-wrap items-center justify-end space-y-8 rounded-3xl border border-white/10 bg-black/60 py-6 shadow-2xl shadow-zinc-300/50 backdrop-blur-2xl in-data-[state=active]:block md:flex-nowrap lg:m-0 lg:flex lg:w-fit lg:gap-0 lg:space-y-0 lg:border-transparent lg:bg-transparent lg:p-0 lg:shadow-none lg:in-data-[state=active]:flex">
               <div className="lg:hidden">
                 <ul className="space-y-4 text-base">
                   {navItems.map((item, index) => (

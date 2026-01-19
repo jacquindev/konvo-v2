@@ -7,7 +7,10 @@ import "@/lib/env-client";
 const nextConfig: NextConfig = {
   devIndicators: false,
   images: {
-    remotePatterns: [{ protocol: "https", hostname: "flagcdn.com" }],
+    remotePatterns: [
+      { protocol: "https", hostname: "flagcdn.com" },
+      { protocol: "https", hostname: "html.tailus.io" }
+    ],
   },
 };
 

@@ -19,6 +19,8 @@ export function SubscriptionDetailsButton() {
               "h-10 rounded-md border bg-background shadow-xs hover:bg-accent hover:text-accent-foreground dark:bg-input/30 dark:border-input dark:hover:bg-input/50",
             subscriptionDetailsCancelButton:
               "h-10 rounded-md bg-destructive text-white hover:bg-destructive/80 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
+            subscriptionDetailsCardBadge: "rounded-full px-2 py-1.5 text-xs",
+            lineItemsDescriptionPrefix: "text-zinc-500 dark:text-zinc-600 text-xs font-normal"
           },
         },
       }}

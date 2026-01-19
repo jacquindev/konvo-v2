@@ -18,8 +18,9 @@ export function LandingLayout({ children }: { children: ReactNode }) {
           production
         />
       </div>
-      <main className="z-20 flex h-screen w-full flex-1 flex-col overflow-y-auto">
-        <LandingNavbar />
+      
+      <LandingNavbar />
+      <main className="z-10 flex h-screen w-full flex-1 flex-col overflow-y-auto">
         {children}
       </main>
     </div>

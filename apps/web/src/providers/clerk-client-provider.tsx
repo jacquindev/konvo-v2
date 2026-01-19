@@ -6,6 +6,13 @@ import { shadcn } from "@clerk/themes";
 
 export function ClerkClientProvider({ children }: { children: ReactNode }) {
   return (
-    <ClerkProvider appearance={{ theme: shadcn }}>{children}</ClerkProvider>
+    <ClerkProvider 
+      appearance={{ 
+        theme: shadcn, 
+        layout: {
+          unsafe_disableDevelopmentModeWarnings: true
+        } 
+      }}
+    >{children}</ClerkProvider>
   );
 }

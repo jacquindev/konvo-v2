@@ -2,7 +2,6 @@
 
 import React from "react";
 import { usePathname } from "next/navigation";
-import { UserButton } from "@clerk/nextjs";
 import { AlignHorizontalJustifyStartIcon } from "lucide-react";
 
 import { cn } from "@repo/ui/lib/utils";
@@ -18,19 +17,24 @@ import { Separator } from "@repo/ui/components/ui/separator";
 import { useSidebar } from "@repo/ui/components/ui/sidebar";
 import { ThemeToggle } from "@repo/ui/components/theme/toggle";
 
+import { UserButton } from "./auth/user-button";
+
+// Special case characters for breadcrumb names
 const breadcrumbMap: Record<string, string> = {
-  dashboard: "Dashboard",
   "knowledge-base": "Knowledge Base",
-  customization: "Customization",
-  integrations: "Integrations",
-  plugins: "Plugins",
+  customization: "Widget Customization",
   billing: "Plans & Billing",
 };
 
 const formatSegment = (segment: string) => {
+  if (breadcrumbMap[segment]) {
+    return breadcrumbMap[segment];
+  }
+
   return segment
-    .split("-")
-    .map((w) => w.charAt(0).toLowerCase() + w.slice(1))
+    .replace(/[-_]/g, " ")
+    .split(" ")
+    .map((w) => w.charAt(0).toUpperCase() + w.slice(1).toLowerCase())
     .join(" ");
 };
 
@@ -52,7 +56,7 @@ export function AppNavbar() {
   });
 
   return (
-    <nav className="z-0 sticky top-0 flex h-16 shrink-0 items-center justify-between border-b px-4 shadow-xs group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 lg:px-6 bg-background/80 backdrop-blur-xl">
+    <nav className="sticky top-0 flex h-16 shrink-0 items-center justify-between border-b px-4 shadow-xs group-has-data-[collapsible=icon]/sidebar-wrapper:h-12 lg:px-6 bg-background/80 backdrop-blur-xl">
       <div className="flex items-center gap-2">
         <Button
           type="button"
@@ -81,9 +85,7 @@ export function AppNavbar() {
                         : "text-foreground",
                     )}
                   >
-                    {item.label.toLowerCase() === "customization"
-                      ? "Widget Customization"
-                      : item.label}
+                    {item.label}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
                 {idx < crumbs.length - 1 && <BreadcrumbSeparator />}
@@ -93,13 +95,7 @@ export function AppNavbar() {
         </Breadcrumb>
       </div>
       <div className="flex items-center gap-3">
-        <UserButton
-          appearance={{
-            elements: {
-              avatarBox: "size-9!",
-            },
-          }}
-        />
+        <UserButton />
         <ThemeToggle />
       </div>
     </nav>

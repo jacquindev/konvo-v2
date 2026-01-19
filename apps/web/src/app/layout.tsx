@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { DM_Mono, Inter } from "next/font/google";
+import { Anonymous_Pro, Inter } from "next/font/google";
 
 import { ThemeProvider } from "@repo/ui/components/theme/provider";
 import { Toaster } from "@repo/ui/components/ui/sonner";
@@ -13,10 +13,10 @@ const fontSans = Inter({
   subsets: ["latin"],
 });
 
-const fontMono = DM_Mono({
+const fontMono = Anonymous_Pro({
   variable: "--font-mono",
   subsets: ["latin"],
-  weight: ["300", "400", "500"],
+  weight: ["400", "700"]
 });
 
 export const metadata: Metadata = {

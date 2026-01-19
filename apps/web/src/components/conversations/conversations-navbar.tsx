@@ -3,10 +3,10 @@
 import { ReactNode } from "react";
 import { MoreHorizontalIcon } from "lucide-react";
 import { useAtomValue, useSetAtom } from "jotai";
-import { UserButton } from "@clerk/nextjs";
 
 import { openContactPanelAtom } from "@/lib/atoms";
 
+import { Hint } from "@repo/ui/components/shared/hint";
 import { ThemeToggle } from "@repo/ui/components/theme/toggle";
 import { Button } from "@repo/ui/components/ui/button";
 import { Separator } from "@repo/ui/components/ui/separator";
@@ -17,7 +17,8 @@ import {
   BreadcrumbLink,
   BreadcrumbList,
 } from "@repo/ui/components/ui/breadcrumb";
-import { Hint } from "@repo/ui/components/shared/hint";
+
+import { UserButton } from "../auth/user-button";
 
 interface ConversationsNavbarProps {
   additional?: ReactNode;

@@ -129,6 +129,8 @@ export function ConversationsSidebar() {
             skipInvitationScreen
             afterCreateOrganizationUrl="/conversations"
             afterSelectOrganizationUrl="/conversations"
+            organizationProfileMode="navigation"
+            organizationProfileUrl="/settings"
             appearance={{
               elements: {
                 rootBox: "h-12! w-full!",
