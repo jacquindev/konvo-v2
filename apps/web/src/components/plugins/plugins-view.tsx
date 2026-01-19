@@ -3,23 +3,16 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import { BlocksIcon, LinkIcon, SearchIcon } from "lucide-react";
+import { BlocksIcon, ExternalLinkIcon, LinkIcon, SearchIcon } from "lucide-react";
 
 import { cn } from "@repo/ui/lib/utils";
 
 import { Button } from "@repo/ui/components/ui/button";
 import { InputGroup, InputGroupAddon, InputGroupInput } from "@repo/ui/components/ui/input-group";
-import { 
-  Item, 
-  ItemActions, 
-  ItemContent, 
-  ItemDescription, 
-  ItemMedia, 
-  ItemTitle 
-} from "@repo/ui/components/ui/item";
 
 import { PageContainer } from "../page-container";
 import { PageHeader } from "../page-header";
+import { Card, CardAction, CardDescription, CardFooter, CardHeader, CardTitle } from "@repo/ui/components/ui/card";
 
 
 const plugins = [
@@ -28,7 +21,8 @@ const plugins = [
     title: "Vapi", 
     icon: "/vapi.jpg", 
     iconClassName: "dark:invert", 
-    description: "Connect Vapi to power real-time voice and AI interactions." 
+    description: "Connect Vapi to power real-time voice and AI interactions.",
+    learnMoreUrl: "https://dashboard.vapi.ai"
   }
 ]
 
@@ -65,31 +59,36 @@ export function PluginsView() {
         </InputGroup>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-4 gap-6 lg:gap-8">
+      <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6 lg:gap-8">
         {filteredPlugins?.map((plugin) => (
-          <Item key={plugin.title} variant="outline" className="bg-card shadow-sm border hover:border-primary hover:scale-[1.02] motion-safe:transition-all motion-safe:duration-300">
-            <ItemMedia className={cn("rounded-md overflow-hidden", plugin.iconClassName)}>
-              <Image 
-                src={plugin.icon}
-                alt={plugin.title}
-                width={40}
-                height={40}
-                className="object-cover object-center"
-              />
-            </ItemMedia>
-            <ItemContent>
-              <ItemTitle className="leading-tight">{plugin.title}</ItemTitle>
-              <ItemDescription>{plugin.description || "No description provided."}</ItemDescription>
-            </ItemContent>
-            <ItemActions>
-              <Button type="button" asChild>
-                <Link href={`/plugins/${plugin.id}`}>
-                  <LinkIcon />
-                  Connect
+          <Card key={plugin.title} className="hover:border-primary hover:scale-[1.02] motion-safe:duration-300 motion-safe:transition-all">
+            <CardHeader>
+              <CardTitle className="text-lg">{plugin.title}</CardTitle>
+              <CardDescription>{plugin.description}</CardDescription>
+              <CardAction>
+                <div className={cn("relative rounded-md overflow-hidden size-10", plugin.iconClassName)}>
+                  <Image 
+                    src={plugin.icon}
+                    alt={plugin.title}
+                    fill
+                    className="object-cover object-center"
+                  />
+                </div>
+              </CardAction>
+            </CardHeader>
+            <CardFooter className="w-full flex items-center justify-between">
+            <Button type="button" variant="outline" asChild>
+                <Link href={plugin.learnMoreUrl} target="_blank">
+                  <ExternalLinkIcon /> Learn More
                 </Link>
               </Button>
-            </ItemActions>
-          </Item>
+              <Button type="button" asChild>
+                <Link href={`/plugins/${plugin.id}`}>
+                  <LinkIcon /> Connect
+                </Link>
+              </Button>
+            </CardFooter>
+          </Card>
         ))}  
 
         {filteredPlugins.length === 0 && (

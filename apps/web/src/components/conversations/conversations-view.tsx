@@ -18,7 +18,7 @@ export function ConversationsView() {
       <ConversationsNavbar />
       <div className="flex flex-1 flex-col h-full w-full gap-y-4">
         <div className="flex flex-1 items-center justify-center flex-col p-10 w-full">
-          <Empty className="shadow-xs border-[1.5px] border-dashed border-primary bg-linear-to-br/oklch from-primary/20 to-accent/20 dark:from-primary/30 dark:to-background">
+          <Empty className="shadow-xs border-[1.5px] border-dashed border-primary bg-linear-to-br/oklch from-primary/20 to-accent/20 dark:from-primary/30 dark:to-background w-full max-w-5xl mx-auto">
             <EmptyHeader>
               <EmptyMedia
                 variant="icon"
