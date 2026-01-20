@@ -42,6 +42,18 @@ export const addUrl = action({
       });
     }
 
+    // Implement subscription check
+    const subscription = await ctx.runQuery(internal.shared.subscriptions.getByOrganizationId, {
+      organizationId: orgId,
+    });
+
+    if (subscription?.status !== "active") {
+      throw new ConvexError({
+        code: "FORBIDDEN",
+        message: "You need an active subscription to perform this action."
+      })
+    }
+
     const scraped = await scrapeWithFirecrawl(args.url);
 
     // Normalized before hashing
@@ -103,6 +115,18 @@ export const addManualText = action({
         code: "NOT_FOUND",
         message: "Organization not found.",
       });
+    }
+
+    // Implement subscription check
+    const subscription = await ctx.runQuery(internal.shared.subscriptions.getByOrganizationId, {
+      organizationId: orgId,
+    });
+
+    if (subscription?.status !== "active") {
+      throw new ConvexError({
+        code: "FORBIDDEN",
+        message: "You need an active subscription to perform this action."
+      })
     }
 
     // Normalize text before hashing & storage
@@ -170,6 +194,18 @@ export const addFile = action({
         code: "NOT_FOUND",
         message: "Organization not found.",
       });
+    }
+
+    // Implement subscription check
+    const subscription = await ctx.runQuery(internal.shared.subscriptions.getByOrganizationId, {
+      organizationId: orgId,
+    });
+
+    if (subscription?.status !== "active") {
+      throw new ConvexError({
+        code: "FORBIDDEN",
+        message: "You need an active subscription to perform this action."
+      })
     }
 
     const { bytes, filename, category } = args;

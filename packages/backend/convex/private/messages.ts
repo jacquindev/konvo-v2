@@ -4,7 +4,7 @@ import { paginationOptsValidator } from "convex/server";
 import { ConvexError, v } from "convex/values";
 import { saveMessage } from "@convex-dev/agent";
 
-import { components } from "../_generated/api";
+import { components, internal } from "../_generated/api";
 import { action, mutation, query } from "../_generated/server";
 import { OPERATOR_MESSAGE_ENHANCEMENT_PROMPT } from "../lib/constants";
 import { supportAgent } from "../shared/ai/agents/supportAgent";
@@ -145,6 +145,18 @@ export const enhanceResponse = action({
         code: "NOT_FOUND",
         message: "Organization not found.",
       });
+    }
+
+    // Implement subscription check
+    const subscription = await ctx.runQuery(internal.shared.subscriptions.getByOrganizationId, {
+      organizationId: orgId,
+    });
+
+    if (subscription?.status !== "active") {
+      throw new ConvexError({
+        code: "FORBIDDEN",
+        message: "You need an active subscription to perform this action."
+      })
     }
 
     const response = await generateText({

@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import Image from "next/image";
 import { CopyIcon, ZapIcon } from "lucide-react";
 import { useOrganization } from "@clerk/nextjs";
@@ -15,7 +16,6 @@ import { Separator } from "@repo/ui/components/ui/separator";
 
 import { PageContainer } from "../page-container";
 import { PageHeader } from "../page-header";
-import { useState } from "react";
 import { IntegrationsModal } from "./integrations-modal";
 
 const integrations = [
@@ -46,19 +46,19 @@ export function IntegrationsView() {
           />
         }
       >
-        <Field>
+        <Field className="grid grid-cols-1 md:grid-cols-2 md:gap-4">
           <FieldLabel htmlFor="organizationId">
-            Organization ID{" "}
-            <span className="text-destructive font-normal">*</span>
+            Organization ID
           </FieldLabel>
           <Field orientation="horizontal">
             <Input
               readOnly
               id="organizationId"
-              className="font-mono text-sm text-muted-foreground truncate"
+              className="font-mono text-sm text-muted-foreground truncate w-full pointer-events-none"
               value={organization?.id || ""}
             />
             <Button
+              id="organizationId"
               type="button"
               size="icon"
               variant="outline"
@@ -72,8 +72,8 @@ export function IntegrationsView() {
         <Separator />
         <div className="flex flex-col gap-6">
           <div className="space-y-2">
-            <Label className="text-xl">Pick A Framework</Label>
-            <p className="text-muted-foreground text-sm text-pretty">
+            <Label className="text-xl font-semibold">Pick A Framework</Label>
+            <p className="text-muted-foreground text-sm text-pretty md:text-balance">
               Start by selecting a framework of your choice. Then add the code
               to your website to enable chatbot for your website.
             </p>
@@ -83,7 +83,7 @@ export function IntegrationsView() {
               <Card
                 key={framework.title}
                 role="button"
-                className="group/framework border-[1.5px] hover:scale-[1.02] hover:border-primary"
+                className="group/framework border-[1.5px] hover:scale-[1.02] hover:border-primary motion-safe:transition-all motion-safe:duration-300"
                 onClick={() => setOpenModal(true)}
               >
                 <CardHeader className="text-center">

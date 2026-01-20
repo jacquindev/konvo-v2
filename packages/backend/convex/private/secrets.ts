@@ -27,7 +27,17 @@ export const upsert = mutation({
       });
     }
 
-    // TODO: Check for subscription
+    // Implement subscription check
+    const subscription = await ctx.runQuery(internal.shared.subscriptions.getByOrganizationId, {
+      organizationId: orgId,
+    });
+
+    if (subscription?.status !== "active") {
+      throw new ConvexError({
+        code: "FORBIDDEN",
+        message: "You need an active subscription to perform this action."
+      })
+    }
 
     await ctx.scheduler.runAfter(0, internal.shared.secrets.upsert, {
       service: args.service,

@@ -2,7 +2,7 @@ import { paginationOptsValidator } from "convex/server";
 import { ConvexError, v } from "convex/values";
 import { type MessageDoc, saveMessage } from "@convex-dev/agent";
 
-import { components } from "../_generated/api";
+import { components, internal } from "../_generated/api";
 import { mutation, query } from "../_generated/server";
 import { supportAgent } from "../shared/ai/agents/supportAgent";
 
@@ -20,6 +20,11 @@ export const create = mutation({
         message: "Invalid session.",
       });
     }
+
+    // Refresh user's session if they are within the threshold (4 hours)
+    await ctx.runMutation(internal.shared.contactSessions.refresh, {
+      contactSessionId: args.contactSessionId
+    });
 
     const widgetSettings = await ctx.db
       .query("widgetSettings")

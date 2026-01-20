@@ -2,12 +2,15 @@
 
 import { PricingTable as ClerkPricingTable } from "@clerk/nextjs";
 
+import { Spinner } from "@repo/ui/components/ui/spinner";
+
 export function PricingTable() {
   return (
     <div className="flex flex-col items-center justify-center gap-6">
       <ClerkPricingTable
         for="organization"
         newSubscriptionRedirectUrl="/billing"
+        fallback={<Spinner className="text-primary shrink-0 size-6" />}
         appearance={{
           elements: {
             pricingTable: "gap-6 lg:gap-8",

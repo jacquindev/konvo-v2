@@ -50,8 +50,18 @@ export const create = action({
       });
     }
 
+    // Refresh user's session if they are within the threshold (4 hours)
+    await ctx.runMutation(internal.shared.contactSessions.refresh, {
+      contactSessionId: args.contactSessionId,
+    });
+
+    // Implement subscription check
+    const subscription = await ctx.runQuery(internal.shared.subscriptions.getByOrganizationId, {
+      organizationId: conversation.organizationId,
+    });
+
     const shouldTriggerAgent =
-      conversation.status === "unresolved";
+      conversation.status === "unresolved" && subscription?.status === "active";
 
     if (shouldTriggerAgent) {
       await supportAgent.generateText(

@@ -1,5 +1,6 @@
 import { ConvexError, v } from "convex/values";
 
+import { internal } from "../_generated/api";
 import { mutation, query } from "../_generated/server";
 
 export const getOne = query({
@@ -76,6 +77,18 @@ export const upsert = mutation({
         vapiSettings: args.vapiSettings,
       });
     } else {
+      // Implement subscription check
+      const subscription = await ctx.runQuery(internal.shared.subscriptions.getByOrganizationId, {
+        organizationId: orgId,
+      });
+
+      if (subscription?.status !== "active") {
+        throw new ConvexError({
+          code: "FORBIDDEN",
+          message: "You need an active subscription to perform this action."
+        })
+      }
+
       await ctx.db.insert("widgetSettings", {
         organizationId: orgId,
         greetMessage: args.greetMessage,
