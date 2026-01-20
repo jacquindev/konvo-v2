@@ -84,7 +84,7 @@ export function WidgetAuthScreen() {
         </div>
       </WidgetHeader>
       <form
-        className="p-6 flex flex-1 flex-col items-center justify-center"
+        className="p-6 flex flex-1 flex-col"
         onSubmit={form.handleSubmit(onSubmit)}
       >
         <FieldGroup>

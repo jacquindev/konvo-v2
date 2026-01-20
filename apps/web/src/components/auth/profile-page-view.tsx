@@ -27,9 +27,9 @@ export function ProfilePageView() {
         }
         appearance={{
           elements: {
-            rootBox: "w-full",
-            cardBox: "w-full h-auto mx-auto max-w-7xl bg-muted p-4 pl-2",
-            navbar: "pt-0",
+            rootBox: "w-full flex-1 container mx-auto",
+            cardBox: "max-w-7xl w-full h-auto mx-auto bg-muted p-4 pl-2",
+            navbar: "pt-0"
           }
         }}
       />

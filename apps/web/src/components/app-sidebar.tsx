@@ -29,6 +29,7 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
+  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
@@ -36,6 +37,7 @@ import {
   useSidebar,
 } from "@repo/ui/components/ui/sidebar";
 import { OrgSwitcher } from "./auth/org-switcher";
+import { ConversationsNotificationBadge } from "./conversations/conversations-notifcation-badge";
 
 /* prettier-ignore */
 export const routes = [
@@ -46,7 +48,7 @@ export const routes = [
   {
     group: "Main",
     items: [
-      { label: "Conversations", href: "/conversations", icon: InboxIcon },
+      { label: "Conversations", href: "/conversations", icon: InboxIcon, hasBadge: true },
       //{ label: "Credentials", href: "/credentials", icon: KeyRoundIcon },
       { label: "Knowledge Base", href: "/knowledge-base", icon: LibraryBigIcon },
       { label: "Plugins", href: "/plugins", icon: BlocksIcon },
@@ -101,27 +103,34 @@ export function AppSidebar() {
             )}
             <SidebarGroupContent>
               <SidebarMenu>
-                {route.items.map((item) => {
-                  const isActive = isRouteActive({ pathname, href: item.href });
+              {route.items.map((item) => {
+                  const isActive = isRouteActive({ pathname, href: item.href, match: "exact" });
+                  const isConversationRoute = item.href.startsWith("/conversations");
 
                   return (
-                    <SidebarMenuButton
-                      asChild
-                      key={item.label}
-                      tooltip={item.label}
-                      isActive={isActive}
-                      className={cn(
-                        "hover:scale-[1.02] hover:shadow-sm motion-safe:transition-all motion-safe:duration-300",
-                        "hover:bg-linear-to-br/oklch from-sidebar from-5% via-[#7033ff] via-30% to-sidebar hover:text-white hover:text-shadow-black/30 hover:text-shadow-xs dark:via-[#8c5cff]",
-                        isActive &&
+                    <SidebarMenuItem key={item.label} className="group/route">
+                      <SidebarMenuButton
+                        asChild
+                        tooltip={item.label}
+                        isActive={isActive}
+                        className={cn(
+                          "hover:scale-[1.02] hover:shadow-sm motion-safe:transition-all motion-safe:duration-300",
+                          "hover:bg-linear-to-br/oklch from-sidebar from-5% via-[#7033ff] via-30% to-sidebar hover:text-white hover:text-shadow-black/30 hover:text-shadow-xs dark:via-[#8c5cff]",
+                          isActive &&
                           "scale-[1.02] bg-linear-to-br/oklch text-white! shadow-sm text-shadow-black/30 text-shadow-xs",
-                      )}
-                    >
-                      <Link href={item.href} prefetch>
-                        <item.icon />
-                        {item.label}
-                      </Link>
-                    </SidebarMenuButton>
+                        )}
+                        >
+                        <Link href={item.href} prefetch>
+                          <item.icon />
+                          {item.label}
+                        </Link>
+                      </SidebarMenuButton>
+                      {isConversationRoute && 
+                        <ConversationsNotificationBadge 
+                          className="group-hover/route:-top-1.5 group-hover/route:shadow-md"
+                        />
+                      }
+                    </SidebarMenuItem>
                   );
                 })}
               </SidebarMenu>

@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konvo Widget Demo</title>
+  <link href="/src/style.css" rel="stylesheet">
+</head>
+<body class="text-foreground bg-background font-sans min-h-dvh w-full flex flex-col items-center justify-center">
+  <main class="max-w-7xl mx-auto h-full w-full flex flex-1 flex-col items-center justify-center p-4 md:p-6 lg:p-8">
+    <div class="container w-full bg-card shadow-sm border border-border rounded-xl mx-auto flex flex-col gap-8 p-8">
+      <div class="space-y-3">
+        <h1 class="text-center text-4xl font-extrabold">Konvo Widget Demo</h1>
+        <p class="text-muted-foreground text-lg leading-tight font-normal text-balance text-center">
+          Use this page to test embedding the Konvo chat widget and behavior before deploying it to your website.
+        </p>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <h2 class="font-bold text-xl">1. Basic Usage</h2>
+        <div class="bg-accent/40 border border-border rounded-lg p-4">
+          <div class="w-full min-w-0 overflow-auto whitespace-nowrap leading-7 font-mono font-normal text-sm select-text">
+            &lt;<span class="text-indigo-600">script</span>
+            <div class="pl-4">
+              <span class="text-pink-600">src</span>=<span class="text-emerald-500">"https://your-domain.com/widget.js"</span>
+              <br/>
+              <span class="text-pink-400">data-organization-id</span>=<span class="text-emerald-500">"org_30FZE66GsG2nfP9SiCWwNQv4h1z"</span>
+            </div>
+            &gt;&lt;/<span class="text-indigo-600">script</span>&gt;
+          </div>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-3">
+        <h2 class="font-bold text-xl">2. Configuration</h2>
+        <div class="grid grid-cols-1 gap-6">
+          <div class="flex flex-col gap-2">
+            <label for="orgId" class="font-medium text-base">Organization ID:</label>
+            <input id="orgId" type="text" placeholder="Enter your organization ID..." value="" class="h-9 selection:bg-primary selection:text-primary-foreground border border-input w-full min-w-0 rounded-md px-3 py-1 shadow-xs transition-[color,box-shadow] outline-none text-sm placeholder:text-muted-foreground truncate focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]" />
+          </div>
+          <div class="flex flex-col gap-2">
+            <label for="position" class="font-medium text-base">Position:</label>
+            <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2">
+              <button onclick="initWidget()" class="bg-primary text-primary-foreground hover:bg-primary/80">Initialize</button>
+              <button onclick="showWidget()" class="bg-secondary text-secondary-foreground hover:bg-secondary/80">Show</button>
+              <button onclick="hideWidget()" class="border border-input bg-background hover:bg-accent hover:text-accent-foreground">Hide</button>
+              <button onclick="destroyWidget()" class="bg-destructive text-destructive-foreground hover:bg-destructive/80">Destroy</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  
+  <!-- Load the widget with default config -->
+  <script type="module" src="/src/index.ts" data-organization-id="org_38SQIX8Z2Wch8aCgOfSHLyQjUF4"></script>
+  
+  <script type="module">
+    import { EMBED_CONFIG } from "./src/config.ts";
+    
+    // Set display values on load
+    document.getElementById("example-org-id").textContent = EMBED_CONFIG.DEFAULT_ORG_ID;
+    document.getElementById("orgId").value = EMBED_CONFIG.DEFAULT_ORG_ID;
+    
+    window.initWidget = function() {
+      const config = {
+        organizationId: document.getElementById("orgId").value || EMBED_CONFIG.DEFAULT_ORG_ID,
+        position: document.getElementById("position").value
+      };
+      
+      if (window.KonvoWidget) {
+        window.KonvoWidget.init(config);
+        console.log("Widget reinitialized with config:", config);
+      }
+    }
+    
+    window.showWidget = function() {
+      if (window.KonvoWidget) {
+        window.KonvoWidget.show();
+      } else {
+        alert("Please initialize the widget first");
+      }
+    }
+    
+    window.hideWidget = function() {
+      if (window.KonvoWidget) {
+        window.KonvoWidget.hide();
+      }
+    }
+    
+    window.destroyWidget = function() {
+      if (window.KonvoWidget) {
+        window.KonvoWidget.destroy();
+        console.log("Widget destroyed");
+      }
+    }
+  </script>
+</body>
+</html>
