@@ -14,7 +14,7 @@ const Page = () => {
     { initialNumItems: 2 },
   );
 
-  if (conversations && conversations.results.length > 0) {
+  if (conversations && conversations.results?.length > 0) {
     redirect(`/conversations/${conversations.results[0]?._id}`)
   }
 

@@ -14,18 +14,18 @@ export function ConversationsNotificationBadge({ className }: { className?: stri
   );
 
   const unrepliedCount = conversations.results?.filter(
-    (conversation) => conversation.lastMessage?.message?.role === "user"
+    (conversation) => conversation.lastMessage?.message?.role === "user" && conversation.status !== "resolved"
   ).length ?? 0;
 
   if (unrepliedCount <= 0) return null;
 
   return (
     <span className={cn(
-      "absolute -top-1 -right-1 size-4 px-1 shrink-0 max-w-none overflow-hidden rounded-full bg-red-500 text-white text-[6px]! font-mono font-medium flex items-center justify-center shadow-sm",
+      "absolute -top-1 -right-1 p-1 min-w-4.5 h-4.5 text-wrap leading-none tracking-tighter max-w-none overflow-hidden rounded-full bg-red-500 dark:bg-red-700 text-white text-xs font-mono font-normal flex items-center justify-center shadow-sm",
       "motion-safe:transition-all motion-safe:duration-300",
       className
     )}>
-      {unrepliedCount > 99 ? "99+" : unrepliedCount}
+      {unrepliedCount >= 99 ? "!" : unrepliedCount}
     </span>
   )
 }

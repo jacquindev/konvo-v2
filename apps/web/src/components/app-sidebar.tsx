@@ -29,13 +29,13 @@ import {
   SidebarGroupLabel,
   SidebarHeader,
   SidebarMenu,
-  SidebarMenuBadge,
   SidebarMenuButton,
   SidebarMenuItem,
   SidebarRail,
   SidebarSeparator,
   useSidebar,
 } from "@repo/ui/components/ui/sidebar";
+
 import { OrgSwitcher } from "./auth/org-switcher";
 import { ConversationsNotificationBadge } from "./conversations/conversations-notifcation-badge";
 

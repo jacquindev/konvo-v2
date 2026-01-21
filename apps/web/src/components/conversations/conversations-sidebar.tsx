@@ -255,7 +255,7 @@ export function ConversationsSidebar() {
                               <p
                                 className={cn(
                                   "line-clamp-1 text-pretty text-xs text-muted-foreground",
-                                  !isLastMessageFromOperator &&
+                                  !isLastMessageFromOperator && conversation.status !== "resolved" &&
                                     "font-semibold text-foreground",
                                 )}
                               >
