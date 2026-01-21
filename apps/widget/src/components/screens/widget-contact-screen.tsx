@@ -6,8 +6,6 @@ import { useAtomValue, useSetAtom } from "jotai";
 
 import { screenAtom, widgetSettingsAtom } from "@/lib/atoms";
 
-import { cn } from "@repo/ui/lib/utils";
-
 import { Button } from "@repo/ui/components/ui/button";
 import { Label } from "@repo/ui/components/ui/label";
 
