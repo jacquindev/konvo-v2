@@ -9,7 +9,8 @@ export function UserButton() {
       userProfileUrl="/profile"
       appearance={{
         elements: {
-          avatarBox: "size-8 border border-muted shadow-sm"
+          userButtonAvatarBox: "size-9 border border-muted shadow-sm",
+          userPreviewAvatarBox: "size-12 border border-muted",
         }
       }}
     />

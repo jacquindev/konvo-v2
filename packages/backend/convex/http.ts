@@ -18,32 +18,34 @@ http.route({
     }
 
     switch (event.type) {
-      case "organization.updated":
-        const subscription = event.data as unknown as {
-          status: string;
-          payer?: {
-            organization_id: string;
+      case "subscription.updated":
+        { 
+          const subscription = event.data as unknown as {
+            status: string;
+            payer?: {
+              organization_id: string;
+            };
           };
-        };
 
-        const organizationId = subscription.payer?.organization_id;
+          const organizationId = subscription.payer?.organization_id;
 
-        if (!organizationId) {
-          return new Response("Missing organization ID", { status: 400 });
+          if (!organizationId) {
+            return new Response("Missing organization ID", { status: 400 });
+          }
+
+          const newMaxAllowedMemberships =
+            subscription.status === "active" ? 5 : 1;
+
+          await clerkClient.organizations.updateOrganization(organizationId, {
+            maxAllowedMemberships: newMaxAllowedMemberships,
+          });
+
+          await ctx.runMutation(internal.shared.subscriptions.upsert, {
+            organizationId,
+            status: subscription.status,
+          });
+          break; 
         }
-
-        const newMaxAllowedMemberships =
-          subscription.status === "active" ? 5 : 1;
-
-        await clerkClient.organizations.updateOrganization(organizationId, {
-          maxAllowedMemberships: newMaxAllowedMemberships,
-        });
-
-        await ctx.runMutation(internal.shared.subscriptions.upsert, {
-          organizationId,
-          status: subscription.status,
-        });
-        break;
       default:
         console.log("Ignored Clerk webhook event:", event.type);
     }
