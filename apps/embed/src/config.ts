@@ -2,5 +2,5 @@ export const WIDGET_URL = import.meta.env.VITE_WIDGET_URL || "http://localhost:3
 
 export const EMBED_CONFIG = {
   DEFAULT_POSITION: "bottom-right" as const,
-  DEFAULT_ORG_ID: "org_38XqLMIn5xbJ5HDpejAJcAbuNaT",
+  DEFAULT_ORG_ID: "org_38cxYNkzQY46x7ZBRa1uyWOErIG",
 }

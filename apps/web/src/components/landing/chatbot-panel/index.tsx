@@ -51,7 +51,7 @@ export function ChatbotPanel() {
 
   return (
     <CardContainer className="inter-var">
-      <CardBody className="h-150 rounded-xl bg-[#0a0a0e]/50 p-0 shadow-lg ring-1 ring-white/5 backdrop-blur-sm">
+      <CardBody className="h-150 rounded-xl bg-[#0a0a0e]/50 p-0 shadow-lg ring-1 ring-white/5 backdrop-blur-sm max-w-[500px]">
         <CardItem
           translateZ={50}
           className="flex w-full items-center gap-3 border-b border-white/10 p-4"
@@ -124,7 +124,7 @@ export function ChatbotPanel() {
             <Badge variant="secondary">Support</Badge>
           </div>
           <div className="flex flex-1 items-center justify-between gap-3 px-4">
-            <Input className="flex-1" placeholder="Type a message..." />
+            <Input readOnly className="flex-1 border-white/10" placeholder="Type a message..." />
             <Button size="icon-sm" type="button">
               <SendIcon />
             </Button>

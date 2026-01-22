@@ -46,7 +46,7 @@ const FeatureCard = ({ feature, delay }: FeatureCardProps) => {
       transition={{ delay, duration: 0.5, ease: "easeOut" }}
       viewport={{ once: true }}
     >
-      <Card className="relative h-full overflow-hidden rounded-2xl border-none bg-linear-to-b from-indigo-500/60 via-indigo-950/50 to-[#0a0a0e] p-2 shadow-sm backdrop-blur-lg hover:scale-105 hover:from-indigo-500/50 hover:shadow-md motion-safe:transition-all motion-safe:duration-300">
+      <Card className="relative h-full overflow-hidden rounded-2xl border-none bg-[#0a0a0e] bg-linear-to-b from-indigo-500/60 via-indigo-950/50 to-[#0a0a0e] p-2 shadow-sm backdrop-blur-lg hover:scale-105 hover:from-indigo-500/50 hover:shadow-md motion-safe:transition-all motion-safe:duration-300">
         <CardContent className="space-y-4 p-4 lg:p-6">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
@@ -122,7 +122,7 @@ export function FeaturesSection() {
         viewport={{ once: true }}
       >
         <div className="mb-4 text-center text-4xl font-medium tracking-tight text-white md:text-left md:text-5xl">
-          <TypingAnimation words={["Designed for trust."]} loop />
+          Designed for trust.
         </div>
         <motion.p
           initial={{ opacity: 0, transform: "translateY(-100px)" }}

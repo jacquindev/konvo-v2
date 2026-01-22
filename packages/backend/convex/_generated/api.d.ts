@@ -31,6 +31,7 @@ import type * as public_organizations from "../public/organizations.js";
 import type * as public_secrets from "../public/secrets.js";
 import type * as public_widgetSettings from "../public/widgetSettings.js";
 import type * as shared_ai_agents_supportAgent from "../shared/ai/agents/supportAgent.js";
+import type * as shared_ai_debugging_rawRequestResponseHandler from "../shared/ai/debugging/rawRequestResponseHandler.js";
 import type * as shared_ai_rag from "../shared/ai/rag.js";
 import type * as shared_ai_tools_escalateConversation from "../shared/ai/tools/escalateConversation.js";
 import type * as shared_ai_tools_resolveConversation from "../shared/ai/tools/resolveConversation.js";
@@ -71,6 +72,7 @@ declare const fullApi: ApiFromModules<{
   "public/secrets": typeof public_secrets;
   "public/widgetSettings": typeof public_widgetSettings;
   "shared/ai/agents/supportAgent": typeof shared_ai_agents_supportAgent;
+  "shared/ai/debugging/rawRequestResponseHandler": typeof shared_ai_debugging_rawRequestResponseHandler;
   "shared/ai/rag": typeof shared_ai_rag;
   "shared/ai/tools/escalateConversation": typeof shared_ai_tools_escalateConversation;
   "shared/ai/tools/resolveConversation": typeof shared_ai_tools_resolveConversation;

@@ -116,10 +116,7 @@ export const create = mutation({
 
     await saveMessage(ctx, components.agent, {
       threadId: conversation.threadId,
-      message: {
-        role: "assistant",
-        content: args.prompt,
-      },
+      message: { role: "assistant", content: args.prompt },
     });
   },
 });

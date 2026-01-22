@@ -1,15 +1,15 @@
 "use client";
 
-import { HomeIcon } from "lucide-react";
-import { PageContainer } from "../page-container";
-import { PageHeader } from "../page-header";
+import { DashboardHeader } from "./dashboard-header";
+import { DashboardKpis } from "./dashboard-kpis";
+import { DashboardOnboarding } from "./dashboard-onboarding";
 
 export function DashboardView() {
   return (
-    <PageContainer
-      header={<PageHeader icon={HomeIcon} title="Dashboard" description="" />}
-    >
-      Dashboard page view
-    </PageContainer>
+    <div className="max-w-7xl mx-auto animate-in fade-in flex flex-col gap-8 p-6 md:p-8 lg:p-10 duration-500">
+      <DashboardHeader />
+      <DashboardKpis />
+      <DashboardOnboarding />
+    </div>
   );
 }

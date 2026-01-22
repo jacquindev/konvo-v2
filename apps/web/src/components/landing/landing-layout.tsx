@@ -7,7 +7,9 @@ import { LandingNavbar } from "./landing-navbar";
 
 export function LandingLayout({ children }: { children: ReactNode }) {
   return (
-    <div className="relative flex min-h-screen w-full flex-col bg-[#010102] font-sans antialiased text-zinc-200 selection:text-zinc-800">
+    <div 
+      className="relative flex min-h-screen w-full flex-col bg-[#010102] font-sans antialiased text-zinc-200 selection:text-zinc-800"
+    >
       <div className="absolute inset-0 z-0">
         <UnicornScene
           projectId="L99tNyU87GNVw5k0YV79"

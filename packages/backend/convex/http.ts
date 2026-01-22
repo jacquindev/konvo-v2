@@ -20,6 +20,8 @@ http.route({
     switch (event.type) {
       case "subscription.updated":
         { 
+
+
           const subscription = event.data as unknown as {
             status: string;
             payer?: {
@@ -44,6 +46,7 @@ http.route({
             organizationId,
             status: subscription.status,
           });
+
           break; 
         }
       default:

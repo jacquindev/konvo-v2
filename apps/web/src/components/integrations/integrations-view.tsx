@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Image from "next/image";
 import { CopyIcon, ZapIcon } from "lucide-react";
 import { useOrganization } from "@clerk/nextjs";
@@ -17,6 +17,7 @@ import { Separator } from "@repo/ui/components/ui/separator";
 import { PageContainer } from "../page-container";
 import { PageHeader } from "../page-header";
 import { IntegrationsModal } from "./integrations-modal";
+import { useIntegrationsPageState } from "@/hooks/integrations/use-integrations-page-state";
 
 const integrations = [
   { title: "HTML", icon: "/html5.svg" },
@@ -29,6 +30,13 @@ export function IntegrationsView() {
   const [openModal, setOpenModal] = useState(false);
 
   const { organization } = useOrganization();
+  const { markIntegrationsOpened } = useIntegrationsPageState(organization?.id)
+
+  useEffect(() => {
+    if (organization?.id) {
+      markIntegrationsOpened()
+    }
+  }, [markIntegrationsOpened, organization?.id])
 
   return (
     <>

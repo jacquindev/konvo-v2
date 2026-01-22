@@ -76,7 +76,7 @@ export function LandingNavbar() {
                 variant="outline"
                 size="icon"
                 onClick={() => setMenuState(!menuState)}
-                className="relative z-20 block cursor-pointer lg:hidden"
+                className="bg-transparent border-white/10 hover:bg-transparent text-white hover:text-zinc-300 relative z-20 block cursor-pointer lg:hidden"
               >
                 <MenuIcon className="m-auto size-5 duration-200 in-data-[state=active]:scale-0 in-data-[state=active]:rotate-180 in-data-[state=active]:opacity-0" />
                 <XIcon className="absolute inset-0 m-auto size-5 scale-0 -rotate-180 opacity-0 duration-200 in-data-[state=active]:scale-100 in-data-[state=active]:rotate-0 in-data-[state=active]:opacity-100" />
