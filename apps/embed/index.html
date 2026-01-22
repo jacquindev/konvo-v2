@@ -40,14 +40,19 @@
           </div>
           <div class="flex flex-col gap-2">
             <label for="position" class="font-medium text-base">Position:</label>
-            <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2">
-              <button onclick="initWidget()" class="bg-primary text-primary-foreground hover:bg-primary/80">Initialize</button>
-              <button onclick="showWidget()" class="bg-secondary text-secondary-foreground hover:bg-secondary/80">Show</button>
-              <button onclick="hideWidget()" class="border border-input bg-background hover:bg-accent hover:text-accent-foreground">Hide</button>
-              <button onclick="destroyWidget()" class="bg-destructive text-destructive-foreground hover:bg-destructive/80">Destroy</button>
-            </div>
+            <select id="position" class="h-9 selection:bg-primary selection:text-primary-foreground border border-input w-full min-w-0 rounded-md px-3 py-1 shadow-xs transition-[color,box-shadow] outline-none text-sm placeholder:text-muted-foreground truncate focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px]">
+              <option value="bottom-right">Bottom Right</option>
+              <option value="bottom-left">Bottom Left</option>
+            </select>
           </div>
         </div>
+      </div>
+
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-2">
+        <button onclick="initWidget()" class="bg-primary text-primary-foreground hover:bg-primary/80">Initialize</button>
+        <button onclick="showWidget()" class="bg-secondary text-secondary-foreground hover:bg-secondary/80">Show</button>
+        <button onclick="hideWidget()" class="border border-input bg-background hover:bg-accent hover:text-accent-foreground">Hide</button>
+        <button onclick="destroyWidget()" class="bg-destructive text-destructive-foreground hover:bg-destructive/80">Destroy</button>
       </div>
     </div>
   </main>
