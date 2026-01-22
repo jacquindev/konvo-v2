@@ -20,7 +20,7 @@ interface IntegrationsModalProps {
   organizationId: string;
 }
 
-const INTEGRATION_SCRIPT = `<script src="${env.NEXT_PUBLIC_WIDGET_URL}" data-organization-id="{{ORGANIZATION_ID}}"></script>`;
+const INTEGRATION_SCRIPT = `<script src="${env.NEXT_PUBLIC_WIDGET_URL}/widget.js" data-organization-id="{{ORGANIZATION_ID}}"></script>`;
 
 function createScript(organizationId: string) {
   return INTEGRATION_SCRIPT.trim().replace(/{{ORGANIZATION_ID}}/g, organizationId);
@@ -61,7 +61,7 @@ export function IntegrationsModal({
               <div className="pl-4">
                 <span className="text-indigo-600 dark:text-indigo-400">src</span>=
                 <span className="text-emerald-600 dark:text-emerald-400">
-                  &quot;{env.NEXT_PUBLIC_WIDGET_URL}&quot;
+                  &quot;{env.NEXT_PUBLIC_WIDGET_URL}/widget.js&quot;
                 </span>
                 <br />
                 <span className="text-indigo-600 dark:text-indigo-400">

@@ -9,6 +9,7 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "html.tailus.io" }
     ],
   },
+  transpilePackages: ["@repo/ui", "@repo/backend"],
 };
 
 export default withSentryConfig(nextConfig, {
