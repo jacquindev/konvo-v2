@@ -1,4 +1,5 @@
 import { createEnv } from "@t3-oss/env-nextjs";
+import { vercel } from "@t3-oss/env-core/presets-zod";
 import { z } from "zod";
 
 export const env = createEnv({
@@ -7,4 +8,5 @@ export const env = createEnv({
     SENTRY_AUTH_TOKEN: z.string().min(1),
   },
   experimental__runtimeEnv: process.env,
+  extends: [vercel()],
 });

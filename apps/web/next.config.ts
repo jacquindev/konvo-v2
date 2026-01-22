@@ -1,9 +1,6 @@
 import { withSentryConfig } from "@sentry/nextjs";
 import type { NextConfig } from "next";
 
-import "@/lib/env";
-import "@/lib/env-client";
-
 const nextConfig: NextConfig = {
   devIndicators: false,
   images: {
